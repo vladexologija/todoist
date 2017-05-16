@@ -1,0 +1,52 @@
+<ul class="nav nav-sidebar">
+    <li>
+        <a ui-sref="todo.categories({project: categoriesCtrl.inbox.id})" ui-sref-opts="{inherit: false}">
+            <i class="fa fa-calendar-o fa-lg"></i> Inbox
+        </a>
+        <a ui-sref="todo.categories({schedule:0})" ui-sref-opts="{inherit: false}">
+            <i class="fa fa-calendar fa-lg"></i> Today
+        </a>
+        <a ui-sref="todo.categories({schedule:7})" ui-sref-opts="{inherit: false}">
+            <i class="fa fa-calendar-check-o fa-lg"></i> Next 7 days
+        </a>
+    </li>
+</ul>
+
+<div todo-nav-tabs>
+    <ul class="nav nav-tabs nav-justified">
+        <li class="active"><a href="" data-tab="projects-tab">Projects</a></li>
+        <li><a href="" data-tab="filters-tab">Filters</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="projects-tab" class="tab-pane fade active in">
+            <ul class="nav nav-tabs">
+                <li role="presentation" class="active" todo-project project="project" on-save="categoriesCtrl.save(project)" on-cancel="categoriesCtrl.cancel()" on-delete="categoriesCtrl.deleteProject(project)" colors="categoriesCtrl.colors" ng-repeat="project in categoriesCtrl.projects | filter:{ id: '!' + categoriesCtrl.inbox.id}"><a href="#">Projects</a></li>
+            </ul>
+
+            <div>
+                <button type="button" class="btn btn-link" ng-click="categoriesCtrl.add()">
+                    <i class="fa fa-plus fa-lg"></i> Add Project
+                </button>
+            </div>
+        </div>
+        <div id="filters-tab" class="tab-pane">
+            <ul class="nav nav-sidebar">
+                <li>
+                    <a ui-sref="todo.categories({priority: 1})" ui-sref-opts="{inherit: false}">
+                        <i class="fa fa-tint" style="color:blue"></i> Priority 1
+                    </a>
+                    <a ui-sref="todo.categories({priority: 2})" ui-sref-opts="{inherit: false}">
+                        <i class="fa fa-tint" style="color:blue"></i> Priority 2
+                    </a>
+                    <a ui-sref="todo.categories({priority: 3})" ui-sref-opts="{inherit: false}">
+                        <i class="fa fa-tint" style="color:blue"></i> Priority 3
+                    </a>
+                    <a ui-sref="todo.categories({priority: 4})" ui-sref-opts="{inherit: false}">
+                        <i class="fa fa-tint" style="color:blue"></i> Priority 4
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

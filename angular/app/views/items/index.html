@@ -1,0 +1,16 @@
+<div>
+  <h3>{{itemsCtrl.categoryCriteria.title}}</h2>
+
+  <ul class="list-group">
+    <li class="list-group-item" todo-item item="item" ng-repeat="item in itemsCtrl.items | filterByCategory : itemsCtrl.categoryCriteria : itemsCtrl.showChecked" on-save="itemsCtrl.save(item)" on-cancel="itemsCtrl.cancel()" on-delete="itemsCtrl.delete(item)" priorities="itemsCtrl.priorities" projects="itemsCtrl.projects" on-complete="itemsCtrl.save(item)"></li>
+  </ul>
+
+  <div>
+    <button type="button" class="btn btn-link" ng-click="itemsCtrl.addItem()">
+      <i class="fa fa-plus fa-lg"></i> Add Task
+    </button>
+    <button type="button" class="pull-right btn btn-default" ng-click="itemsCtrl.toggleChecked()">
+      <i class="fa fa-clock-o"></i>
+    </button>
+  </div>
+</div>

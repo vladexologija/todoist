@@ -1,0 +1,19 @@
+<div ng-show="!project.isEditMode" class="input-group input-group-show">
+    <i class="fa fa-circle" aria-hidden="true" ng-style="{'color': project.color}"></i>
+    <a ui-sref="todo.categories({project:project.id})" ui-sref-opts="{inherit: false}">{{project.name}}</a>
+
+    <div class="input-group-btn">
+        <div todo-dropdown class="pull-right">
+            <div class="dropdown">
+                <button class="btn btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                    <span class="fa fa-ellipsis-v"></span>
+                </button>
+
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a href="#" ng-click="project.isEditMode = true">Edit Project</a></li>
+                    <li><a href="#" ng-click="delete()">Delete Project</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

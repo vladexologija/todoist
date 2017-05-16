@@ -1,0 +1,85 @@
+.navbar {
+    background-color: $brand-primary;
+    border: solid 1px $brand-danger;
+    margin-bottom: 0px;
+    border-radius: 0;
+    color: $navbar-default-brand-color;
+
+    .navbar-brand {
+      color: $navbar-default-brand-color;
+
+      img {
+        margin-right: 5px;
+      }
+    }
+
+    .fa-search {
+      position: absolute;
+      display: block;
+      cursor: text;
+      z-index: 99;
+      margin-top: 8px;
+      margin-left: 10px;
+    }
+
+    ::-webkit-input-placeholder {
+        color: #FFFFFF;
+    }
+
+    .tt-hint,
+    .tt-query,
+    .typeahead {
+        width: 300px;
+        height: 32px;
+        padding: 8px 30px;
+        font-size: 14px;
+        border: 0px;;
+        background-color: $brand-primary;
+        outline: none;
+        transition: all .2s ease-in;
+
+        &:focus {
+            background-color: $navbar-default-brand-color !important;
+            border: 1px solid #eee;
+            color: $input-color;
+            width: 500px;
+        }
+    }
+
+    .tt-hint {
+        color: $input-border;
+    }
+
+    .tt-menu {
+        width: 422px;
+        padding: 8px 0;
+        background-color: #fff;
+        border: 1px solid #ccc;
+    }
+
+    .tt-suggestion {
+        padding: 3px 20px;
+        font-size: 18px;
+        line-height: 24px;
+        color: $input-color;
+    }
+
+    .tt-suggestion:hover {
+        cursor: pointer;
+        color: #fff;
+        background-color: $input-border;
+    }
+
+    .tt-suggestion.tt-cursor {
+        color: #fff;
+        background-color: #0097cf;
+    }
+
+    .tt-suggestion p {
+        margin: 0;
+    }
+
+    .tt-title {
+        margin-left: 10px;
+    }
+}

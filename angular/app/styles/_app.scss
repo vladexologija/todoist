@@ -1,0 +1,147 @@
+@media (min-width: 768px) {
+  .container {
+      width: 520px;
+  }
+}
+@media (min-width: 992px) {
+  .container {
+      width: 750px;
+  }
+}
+@media (min-width: 1200px){
+  .container {
+      width: 950px;
+  }
+}
+
+.holder {
+  background-color: $gray-lighter;
+}
+
+.content {
+    padding: 0 20px;
+    border-left: 1px solid #f1f1f1;
+    border-right: 1px solid #f1f1f1;
+    min-height: 400px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Raleway', sans-serif;
+}
+
+p, div {
+    font-family: 'Raleway', sans-serif;
+}
+
+.sidebar {
+  margin-top: 10px;
+}
+
+a {
+    color: $gray-base;
+
+    &:active,
+    &:focus,
+    &:visited,
+    &:hover {
+        text-decoration: none;
+        color: $gray-base;
+    }
+}
+
+.action-group {
+  margin-top: 5px;
+}
+
+.btn-default {
+    background-color: transparent;
+
+    &:active,
+    &:focus,
+    &:visited,
+    &:hover {
+        background-color: transparent;
+    }
+}
+
+.btn-link {
+    padding: 6px 0px;
+    color: $brand-primary;
+
+    i {
+      margin-right: 5px;
+    }
+
+    &:active,
+    &:focus,
+    &:visited,
+    &:hover {
+        color: $brand-primary;
+    }
+}
+
+a.color-chooser {
+    height: 15px;
+    width: 15px;
+}
+
+.nav.nav-tabs {
+  border-bottom: 0px;
+
+  .fa.fa-circle {
+    margin-right: 10px;
+  }
+
+  &.nav-justified {
+    li {
+      a {
+        border-top: 0px;
+        border-left: 0px;
+        border-right: 0px;
+        border-bottom: solid 1px $gray-light;
+
+        &:active,
+        &:focus,
+        &:visited,
+        &:hover {
+          font-weight: bold;
+          background-color: transparent;
+        }
+      }
+
+      &.active {
+        a {
+          border-top: 0px;
+          border-left: 0px;
+          border-right: 0px;
+          border-bottom: solid 1px $gray-darker;
+
+          &:active,
+          &:focus,
+          &:visited,
+          &:hover {
+            font-weight: normal;
+            background-color: transparent;
+          }
+        }
+      }
+    }
+  }
+
+  .input-group-edit {
+    .input-group-btn {
+      position: absolute;
+      z-index: 99;
+    }
+    .form-control {
+      padding-left: 50px;
+    }
+    .dropdown-menu {
+      position: relative;
+    }
+  }
+}
+
+.tab-content {
+  padding: 20px 10px 5px 10px;
+}

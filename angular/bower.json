@@ -1,0 +1,35 @@
+{
+  "name": "todoist",
+  "version": "0.0.0",
+  "dependencies": {
+    "angular": "^1.4.0",
+    "bootstrap": "^3.2.0",
+    "angular-animate": "^1.4.0",
+    "angular-cookies": "^1.4.0",
+    "angular-resource": "^1.4.0",
+    "angular-route": "^1.4.0",
+    "angular-sanitize": "^1.4.0",
+    "angular-touch": "^1.4.0",
+    "bootstrap": "^3.3.7",
+    "font-awesome": "^4.6.3",
+    "typeahead.js": "^0.11.1",
+    "handlebars": "^4.0.5",
+    "moment": "^2.14.1",
+    "angular-ui-router": "^0.3.1",
+    "lodash": "^4.15.0"
+  },
+  "devDependencies": {
+    "angular-mocks": "^1.4.0"
+  },
+  "appPath": "app",
+  "moduleName": "todoist",
+  "overrides": {
+    "bootstrap": {
+      "main": [
+        "less/bootstrap.less",
+        "dist/css/bootstrap.css",
+        "dist/js/bootstrap.js"
+      ]
+    }
+  }
+}

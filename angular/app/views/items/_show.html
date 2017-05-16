@@ -1,0 +1,22 @@
+<div class="input-group input-group-show">
+  <span class="input-group-addon">
+      <input name="checkbox" class="todo-checkbox" ng-class="getPriorityClass(item.priority)" type="checkbox" ng-model="item.checked" >
+      <label for="checkbox"><span ng-click="check(item)"></span></label>
+  </span>
+  <input type="text" class="form-control" ng-click="toggleEditMode()" ng-model="item.content">
+  <span class="input-group-addon">
+    <a href="" ui-sref="todo.categories({project:item.project.id})" ui-sref-opts="{inherit: false}">{{ item.project.name }} <i class="fa fa-circle" ng-style="{'color': item.project.color}"></i></a>
+  </span>
+  <div class="input-group-btn">
+    <div todo-dropdown class="pull-right">
+      <div class="dropdown">
+        <button class="btn btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          <span class="fa fa-ellipsis-v"></span></button>
+        <ul class="dropdown-menu dropdown-menu-right">
+          <li><a href="" ng-click="item.isEditMode = true">Edit Item</a></li>
+          <li><a href="" ng-click="delete()">Delete item</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

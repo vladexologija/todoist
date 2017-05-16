@@ -1,0 +1,39 @@
+//
+// Variables
+// --------------------------------------------------
+
+//== Colors
+
+$gray-base:              #303333;
+$gray-darker:            lighten($gray-base, 13.5%); // #222
+$gray-dark:              lighten($gray-base, 20%);   // #333
+$gray:                   lighten($gray-base, 33.5%); // #555
+$gray-light:             lighten($gray-base, 46.7%); // #777
+$gray-lighter:           lighten($gray-base, 93.5%); // #eee
+
+
+$brand-primary:         #db4c3f;
+$brand-success:         #5cb85c;
+$brand-info:            #5bc0de;
+$brand-warning:         #e3746a;
+$brand-danger:          #ca2100;
+
+//== Priorities
+
+$priority-1: #ac0000;
+$priority-2: #f8801c;
+$priority-3: #fcc12b;
+$priority-4: #c9c9c9;
+
+$priority-1-bg: #f5e5e5;
+$priority-2-bg: #fef2e8;
+$priority-3-bg: #fff6e1;
+$priority-4-bg: #fafafa;
+
+//== Overrides
+
+$navbar-default-brand-color:     #FFFFFF;
+$input-border:                   #ccc;
+$list-group-border:              #f0f0f0;
+$input-color:                    $gray;
+$input-bg-disabled:              $gray-lighter;

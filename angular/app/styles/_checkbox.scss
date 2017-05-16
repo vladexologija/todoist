@@ -1,0 +1,67 @@
+.priority_1 {
+  color: $priority-1;
+}
+
+.priority_2 {
+  color: $priority-2;
+}
+
+.priority_3 {
+  color: $priority-3;
+}
+
+.priority_4 {
+  color: $priority-4;
+}
+
+input[type="checkbox"].todo-checkbox {
+    display: none;
+}
+
+input[type="checkbox"].todo-checkbox + label span {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    vertical-align: middle;
+    cursor: pointer;
+    line-height: 15px;
+    border: 1px solid #c9c9c9;
+    background-color: #FFFFFF;
+    border-radius: 18px;
+}
+
+input[type="checkbox"].priority_1.todo-checkbox + label span {
+    background-color: $priority-1-bg;
+    border: 2px solid $priority-1;
+}
+
+input[type="checkbox"].priority_1.todo-checkbox:checked + label span {
+    background-color: $priority-1;
+}
+
+input[type="checkbox"].priority_2.todo-checkbox + label span {
+    background-color: $priority-2-bg;
+    border: 2px solid $priority-2;
+}
+
+input[type="checkbox"].priority_2.todo-checkbox:checked + label span {
+    background-color: $priority-2;
+}
+
+input[type="checkbox"].priority_3.todo-checkbox + label span {
+    background-color: $priority-3-bg;
+    border: 2px solid $priority-3;
+}
+
+input[type="checkbox"].priority_3.todo-checkbox:checked + label span {
+    background-color: $priority-3;
+}
+
+input[type="checkbox"].priority_4.todo-checkbox + label span {
+    background-color: $priority-4-bg;
+    border: 2px solid $priority-4;
+}
+
+input[type="checkbox"].priority_4.todo-checkbox:checked + label span {
+    background-color: $priority-4;
+}

@@ -1,0 +1,7 @@
+<div ng-show="!item.isEditMode">
+  <div ng-include src="'views/items/_show.html'"></div>
+</div>
+
+<div ng-show="item.isEditMode">
+  <div ng-include src="'views/items/_edit.html'"></div>
+</div>

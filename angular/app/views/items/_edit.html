@@ -1,0 +1,38 @@
+<form name="itemForm" novalidate="">
+  <div class="input-group input-group-edit">
+    <input type="text" name="content" class="form-control" ng-model="item.content" required>
+    
+    <div class="input-group-addon input-group-date-addon">
+      <input todo-format-date class="form-control" type="date" ng-model="item.dueDate">
+    </div>
+  </div>
+
+  <div class="action-group">
+    <button class="btn btn-danger" ng-disabled="itemForm.content.$invalid" ng-click="save()">Save</button>
+    <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+
+    <div todo-dropdown class="pull-right">
+      <div class="dropdown">
+        <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown">
+          <i class="fa fa-flag" ng-class="getPriorityClass(item.priority)"></i>
+        </button>
+
+        <ul class="dropdown-menu dropdown-menu-right">
+          <li ng-repeat="priority in priorities"><a href="" ng-click="choosePriority(priority)" ng-model="item.priority"><i class="fa fa-flag" ng-class="priority.class"></i></a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div todo-dropdown class="pull-right">
+      <div class="dropdown">
+        <button class="btn btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown">
+          <i class="fa fa-list-alt" ng-style="{'color': item.project.color}"></i>
+        </button>
+
+        <ul class="dropdown-menu dropdown-menu-right">
+          <li ng-repeat="project in projects"><a href="" ng-click="chooseProject(project)"><i class="fa fa-circle" ng-style="{'color': project.color}"></i>{{project.name}}</a> </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</form>
