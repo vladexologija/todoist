@@ -1,0 +1,17 @@
+@import 'variables.css';
+
+.navbar {
+  background-color: $brand-primary !important;
+  border: solid 1px $brand-danger !important;
+
+  .navbarbrand {
+    span {
+      margin-left: 10px;
+      color: #FFFFFF;
+    }
+    img {
+      margin-top: 5px;
+    }
+  }
+
+}

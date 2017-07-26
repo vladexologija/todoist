@@ -1,0 +1,34 @@
+{
+  "presets": [
+    "react",
+    ["es2015", {"modules": false}],
+    "es2016",
+    "stage-2"
+    /*["env", {
+			"targets": {
+				"browsers": "last 2 versions"
+			},
+			"loose": true,
+			"modules": false
+		}]*/
+  ],
+  "plugins": [
+    "transform-decorators-legacy",
+    /*"react-hot-loader/babel",*/
+    "babel-plugin-syntax-dynamic-import",
+    "babel-plugin-dynamic-import-webpack",
+    "transform-class-properties"
+  ],
+  "env": {
+    "start": {
+      "presets": [
+        "react-hmre"
+      ]
+    },
+    "test": {
+      "plugins": [
+        "transform-es2015-modules-commonjs"
+      ]
+    }
+  }
+}

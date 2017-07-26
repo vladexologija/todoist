@@ -1,0 +1,33 @@
+$gray-base: #303333;
+$gray-darker: color($gray-base tint(13.5%));
+$gray-dark: color($gray-base tint(20%));
+$gray: color($gray-base tint(33.5%));
+$gray-light: color($gray-base tint(46.7%));
+$gray-lighter: color($gray-base tint(93.5%));
+
+$brand-primary: #db4c3f;
+$brand-success: #5cb85c;
+$brand-info: #5bc0de;
+$brand-warning: #e3746a;
+$brand-danger: #ca2100;
+
+$priority-1: #ac0000;
+$priority-2: #f8801c;
+$priority-3: #fcc12b;
+$priority-4: #c9c9c9;
+
+$priority-1-bg: #f5e5e5;
+$priority-2-bg: #fef2e8;
+$priority-3-bg: #fff6e1;
+$priority-4-bg: #fafafa;
+
+$navbar-default-brand-color: #ffffff;
+$input-border: #ccc;
+$list-group-border: #f0f0f0;
+$input-color: $gray;
+$input-bg-disabled: $gray-lighter;
+
+@custom-media --phone (min-width: 544px);
+@custom-media --tablet (min-width: 768px);
+@custom-media --desktop (min-width: 992px);
+@custom-media --large-desktop (min-width: 1200px);

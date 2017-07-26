@@ -1,0 +1,97 @@
+@import 'variables.css';
+
+:global {
+  @media (--tablet) {
+    .container {
+      width: 520px;
+    }
+  }
+  @media (--desktop) {
+    .container {
+      width: 750px;
+    }
+  }
+  @media (--large-desktop) {
+    .container {
+      width: 950px;
+    }
+  }
+
+  .content {
+    padding: 0 20px;
+    border-left: 1px solid #f1f1f1;
+    border-right: 1px solid #f1f1f1;
+    min-height: 400px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Raleway', sans-serif;
+  }
+
+  p,
+  div {
+    font-family: 'Raleway', sans-serif;
+  }
+
+  .sidebar {
+    margin-top: 10px;
+  }
+
+  a {
+    font-size: 14px;
+    color: $gray-base;
+
+    &:active,
+    &:focus,
+    &:visited,
+    &:hover {
+      text-decoration: none;
+      color: $gray-base;
+    }
+  }
+
+  .action-group {
+    margin-top: 5px;
+  }
+
+  .btn-default {
+    background-color: transparent;
+
+    &:active,
+    &:focus,
+    &:visited,
+    &:hover {
+      background-color: transparent;
+    }
+  }
+
+  .btn-link {
+    padding: 6px 0px;
+    color: $brand-primary;
+
+    i {
+      margin-right: 5px;
+    }
+
+    &:active,
+    &:focus,
+    &:visited,
+    &:hover {
+      color: $brand-primary;
+    }
+  }
+
+  a.color-chooser {
+    height: 15px;
+    width: 15px;
+  }
+
+  .tab-content {
+    padding: 20px 10px 5px 10px;
+  }
+}

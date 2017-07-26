@@ -1,0 +1,10 @@
+.formcontrol {
+  border: 0px;
+}
+.dropdowntoggle {
+  border: 0px;
+
+  &::after {
+    display:none;
+  }
+}
