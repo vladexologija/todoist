@@ -20,6 +20,9 @@
 
     .formcontrol {
       border: 0px;
+      &.formcontroledit{
+        flex-direction: row;
+      }
     }
 
     .dropdowntoggle {
@@ -30,23 +33,23 @@
       }
     }
 
-    :global(input[type="checkbox"].todo-checkbox) {
-        display: none;
+    .todocheckbox {
+      display: none;
     }
 
-    :global(input[type="checkbox"].todo-checkbox + label span) {
-        display: inline-block;
-        width: 18px;
-        height: 18px;
-        vertical-align: middle;
-        cursor: pointer;
-        line-height: 15px;
-        border: 2px solid #f8801c;
-        background-color: #fef2e8;
-        border-radius: 18px;
+    .todocheckbox + label span {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      vertical-align: middle;
+      cursor: pointer;
+      line-height: 15px;
+      border: 2px solid #f8801c;
+      background-color: #fef2e8;
+      border-radius: 18px;
     }
 
-    :global(input[type="checkbox"].todo-checkbox:checked + label span) {
+    .todocheckbox:checked + label span {
       background-color: #f8801c;
     }
   }

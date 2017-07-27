@@ -12,16 +12,19 @@ const fakeDatabase = {
     {
       id: v1,
       task: 'hey',
+      date: new Date(),
       completed: true
     },
     {
       id: v2,
       task: 'ho',
+      date: new Date(),
       completed: false
     },
     {
       id: v3,
       task: 'let’s go',
+      date: new Date(),
       completed: false
     }
   ],

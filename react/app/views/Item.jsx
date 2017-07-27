@@ -3,13 +3,11 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { DragSource, DropTarget } from 'react-dnd'
-import classNames from 'classnames'
-import DropdownButton from '../components/DropdownButton'
-import EditField from '../components/EditField'
+
+import EditItem from '../components/EditItem'
 import ItemTypes from '../constants/itemTypes'
 import { updateItem, deleteItem } from '../actions/items'
 import { moveItem, detachItem } from '../actions/projects'
-import style from '../styles/item.css'
 
 // We can set the initial state for dragging here
 const noteSource = {
@@ -69,11 +67,11 @@ class Item extends React.Component {
     this.props.onUpdateItem({ id, editing: true })
   }
 
-  editItem = (id, task) => {
-    if (!task.trim()) {
+  editItem = (id, data) => {
+    if (!data || !data.task.trim()) {
       this.props.onUpdateItem({ id, editing: false })
     } else {
-      this.props.onUpdateItem({ id, task, editing: false })
+      this.props.onUpdateItem({ id, ...data, editing: false })
     }
   }
 
@@ -86,33 +84,18 @@ class Item extends React.Component {
 
   render() {
     const { item } = this.props
-
     return (
-      <div className='input-group input-group-show'>
-        <span className={classNames('input-group-addon', style.inputgroupaddon)}>
-          <input type='checkbox' name='checkbox' className='todo-checkbox' checked={item.completed} />
-          <label htmlFor='checkbox'>
-            <span onClick={e => this.checkItem(item.id, !!item.completed, e)} />
-          </label>
-        </span>
-
-        <EditField
-          editing={item.editing}
-          completed={item.completed}
-          value={item.task}
-          onValueClick={() => this.activateItemEdit(item.id)}
-          onEdit={task => this.editItem(item.id, task)}
-        />
-
-        <DropdownButton>
-          <a href='#' className='dropdown-item' onClick={() => this.activateItemEdit(item.id)}>
-            Edit Item
-          </a>
-          <a href='#' className='dropdown-item' onClick={e => this.deleteItem(e, this.props.project, item.id)}>
-            Delete Item
-          </a>
-        </DropdownButton>
-      </div>
+      <EditItem
+        editing={item.editing}
+        completed={item.completed}
+        task={item.task}
+        date={item.date}
+        onCheck={e => this.checkItem(item.id, !!item.completed, e)}
+        onClick={() => this.activateItemEdit(item.id)}
+        onEdit={() => this.activateItemEdit(item.id)}
+        onUpdate={data => this.editItem(item.id, data)}
+        onDelete={e => this.deleteItem(e, this.props.project, item.id)}
+      />
     )
   }
 }

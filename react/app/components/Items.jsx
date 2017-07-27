@@ -10,7 +10,7 @@ import style from '../styles/item.css'
 const Items = props =>
   <div>
     <h3 className={style.title}>
-      {props.project.name}
+      {props.project && props.project.name}
     </h3>
     <ul className={classNames('list-group', style.listgroup)}>
       {props.items.map(item =>
@@ -20,9 +20,11 @@ const Items = props =>
       )}
     </ul>
     <div>
-      <button className='btn btn-link' onClick={props.onAddItem}>
-        <i className='fa fa-plus fa-lg' /> Add Task
-      </button>
+      {props.project
+        ? <button className='btn btn-link' onClick={props.onAddItem}>
+            <i className='fa fa-plus fa-lg' /> Add Task
+          </button>
+        : null}
     </div>
 
     <Filter />

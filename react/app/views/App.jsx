@@ -9,7 +9,7 @@ import Items from '../components/Items'
 import FetchError from '../components/FetchError'
 import { attachItem, createProject, fetchProjects } from '../actions/projects'
 import { createItem, fetchItems } from '../actions/items'
-import { getSelectedProject, getVisibleItems, getIsFetching, getErrorMessage } from '../reducers'
+import { getSelectedProject, getDueItems, getVisibleItems, getIsFetching, getErrorMessage } from '../reducers'
 
 import '../styles/app.css'
 
@@ -81,7 +81,7 @@ class App extends React.Component {
               <Projects onAddProject={this.addProject} projects={projects} />
             </div>
             <div className='col-md-8 content'>
-              {project ? <Items onAddItem={this.addItem} project={project} items={items} /> : null}
+              {items.length ? <Items onAddItem={this.addItem} project={project} items={items} /> : null}
             </div>
           </div>
         </div>
@@ -92,7 +92,9 @@ class App extends React.Component {
 
 const mapStateToAppProps = (state, props) => {
   const filter = (props.match && props.match.params && props.match.params.filter) || 'all'
-  const items = getVisibleItems(state, (props.match && props.match.params && props.match.params.filter) || 'all')
+  const date = props.match && props.match.params && props.match.params.date
+
+  const items = date ? getDueItems(state, date) : getVisibleItems(state, filter)
   const project = getSelectedProject(state)
 
   return {

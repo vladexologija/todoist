@@ -13,10 +13,11 @@ const Root = ({ store }) =>
     <Router>
       <div>
         <Switch>
+          <Route path='/:date(\d{4}-\d{2}-\d{2})' date='true' component={AppRoute} />
           <Route exact path='/:filter?' component={AppRoute} />
           <Route path='/testing/' component={TestingRoute} />
           <Route path='/children/' children={match => match && <h1>Children</h1>} />
-          <Route render={() => <h1>Page not found</h1>} />
+          <Route render={() => <h1>Page not found </h1>} />
         </Switch>
       </div>
     </Router>

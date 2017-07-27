@@ -3,58 +3,64 @@
 import React, { PropTypes } from 'react'
 import { NavLink } from 'react-router-dom'
 import classNames from 'classnames'
+import moment from 'moment'
 
 import Project from '../views/Project'
 import style from '../styles/nav.css'
 
-const Projects = props =>
-  <div>
+const Projects = props => {
+  const today = moment().format('YYYY-MM-DD')
+  const next = moment().add('days', 7).format('YYYY-MM-DD')
+  return (
     <div>
-      <ul className='nav flex-column'>
-        <li className='nav-item'>
-          <NavLink className='nav-link' to='/inbox'>
-            <i className='fa fa-calendar-o fa-lg' /> Inbox
-          </NavLink>
-        </li>
-        <li className='nav-item'>
-          <NavLink className='nav-link' to='/today'>
-            <i className='fa fa-calendar fa-lg' /> Today
-          </NavLink>
-        </li>
-        <li className='nav-item'>
-          <NavLink className='nav-link' to='/next'>
-            <i className='fa fa-calendar-check-o fa-lg' /> Next 7 days
-          </NavLink>
-        </li>
-      </ul>
-    </div>
-    <div>
-      <ul className={classNames('nav', style.nav, 'nav-tabs', 'nav-justified')}>
-        <li className='nav-item'>
-          <a href='#' className={classNames('nav-link', style.navlink, style.active)}>
-            Projects
-          </a>
-        </li>
-        <li className='nav-item'>
-          <a href='#' className={classNames('nav-link', style.navlink)}>
-            Filters
-          </a>
-        </li>
-      </ul>
-      <div className='tab-content'>
-        <ul className='nav flex-column nav-sidebar'>
-          {props.projects.map(project =>
-            <li key={project.id} className='nav-item'>
-              <Project project={project} />
-            </li>
-          )}
+      <div>
+        <ul className='nav flex-column'>
+          <li className='nav-item'>
+            <NavLink className='nav-link' to='/inbox'>
+              <i className='fa fa-calendar-o fa-lg' /> Inbox
+            </NavLink>
+          </li>
+          <li className='nav-item'>
+            <NavLink className='nav-link' to={today}>
+              <i className='fa fa-calendar fa-lg' /> Today
+            </NavLink>
+          </li>
+          <li className='nav-item'>
+            <NavLink className='nav-link' to={next}>
+              <i className='fa fa-calendar-check-o fa-lg' /> Next 7 days
+            </NavLink>
+          </li>
         </ul>
       </div>
-      <button type='button' className='btn btn-link' onClick={props.onAddProject}>
-        <i className='fa fa-plus fa-lg' /> Add Project
-      </button>
+      <div>
+        <ul className={classNames('nav', style.nav, 'nav-tabs', 'nav-justified')}>
+          <li className='nav-item'>
+            <a href='#' className={classNames('nav-link', style.navlink, style.active)}>
+              Projects
+            </a>
+          </li>
+          <li className='nav-item'>
+            <a href='#' className={classNames('nav-link', style.navlink)}>
+              Filters
+            </a>
+          </li>
+        </ul>
+        <div className='tab-content'>
+          <ul className='nav flex-column nav-sidebar'>
+            {props.projects.map(project =>
+              <li key={project.id} className='nav-item'>
+                <Project project={project} />
+              </li>
+            )}
+          </ul>
+        </div>
+        <button type='button' className='btn btn-link' onClick={props.onAddProject}>
+          <i className='fa fa-plus fa-lg' /> Add Project
+        </button>
+      </div>
     </div>
-  </div>
+  )
+}
 
 Projects.propTypes = {
   projects: PropTypes.array.isRequired,

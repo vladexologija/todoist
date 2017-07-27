@@ -2,17 +2,23 @@
 
 import React, { Component, PropTypes } from 'react'
 import classNames from 'classnames'
+
+import DropdownButton from '../components/DropdownButton'
 import style from '../styles/project.css'
 
-export default class EditField extends Component {
+export default class EditProject extends Component {
   static propTypes = {
     value: PropTypes.string.isRequired,
+    selected: PropTypes.bool,
     editing: PropTypes.bool,
     onEdit: PropTypes.func.isRequired,
-    onValueClick: PropTypes.func.isRequired
+    onUpdate: PropTypes.func.isRequired,
+    onDelete: PropTypes.func.isRequired,
+    onClick: PropTypes.func.isRequired
   }
 
   static defaultProps = {
+    selected: false,
     editing: false
   }
 
@@ -26,16 +32,30 @@ export default class EditField extends Component {
   finishEdit = e => {
     const value = e.target.value
 
-    if (this.props.onEdit) {
+    if (this.props.onUpdate) {
       // It can be a good idea to name your callbacks using on prefix.
-      this.props.onEdit(value)
+      this.props.onUpdate(value)
     }
   }
 
   renderValue = () =>
-    <a href='#' className={classNames('form-control', style.formcontrol)} onClick={this.props.onValueClick}>
-      {this.props.value}
-    </a>
+    <div className={classNames('input-group', style.inputgroup)}>
+      <a
+        href='#'
+        className={classNames('form-control', style.formcontrol, { [style.selected]: this.props.selected })}
+        onClick={this.props.onClick}
+      >
+        {this.props.value}
+      </a>
+      <DropdownButton>
+        <a href='#' className='dropdown-item' onClick={this.props.onEdit}>
+          Edit Project
+        </a>
+        <a href='#' className='dropdown-item' onClick={this.props.onDelete}>
+          Delete Project
+        </a>
+      </DropdownButton>
+    </div>
 
   renderEdit = () =>
     <input

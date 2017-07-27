@@ -2,11 +2,9 @@ import React, { PropTypes } from 'react'
 import { DropTarget } from 'react-dnd'
 import { connect } from 'react-redux'
 import classNames from 'classnames'
-import EditField from '../components/EditField'
-import DropdownButton from '../components/DropdownButton'
+import EditProject from '../components/EditProject'
 import { selectProject, updateProject, deleteProject } from '../actions/projects'
 import ItemTypes from '../constants/itemTypes'
-import style from '../styles/project.css'
 
 const noteTarget = {
   hover(targetProps, monitor) {
@@ -61,24 +59,16 @@ class Project extends React.Component {
 
     // TODO implement color picker
     return (
-      <div className={classNames('input-group', style.inputgroup)}>
-        <EditField
-          className='project-name'
-          editing={project.editing}
-          value={project.name}
-          onEdit={this.editName}
-          onValueClick={this.select}
-        />
-
-        <DropdownButton>
-          <a href='#' className='dropdown-item' onClick={this.activateEdit}>
-            Edit Project
-          </a>
-          <a href='#' className='dropdown-item' onClick={this.del}>
-            Delete Project
-          </a>
-        </DropdownButton>
-      </div>
+      <EditProject
+        className='project-name'
+        selected={project.selected}
+        editing={project.editing}
+        value={project.name}
+        onEdit={this.activateEdit}
+        onUpdate={this.editName}
+        onClick={this.select}
+        onDelete={this.del}
+      />
     )
   }
 }

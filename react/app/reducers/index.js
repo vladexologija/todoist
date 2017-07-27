@@ -18,6 +18,8 @@ export const getVisibleItems = (state, filter) => {
   return fromItems.getVisibleItems(state.items, project, filter)
 }
 
+export const getDueItems = (state, date) => fromItems.getDueItems(state.items, date)
+
 export const getIsFetching = state => fromItems.getIsFetching(state.items)
 
 export const getErrorMessage = state => fromItems.getErrorMessage(state.items)

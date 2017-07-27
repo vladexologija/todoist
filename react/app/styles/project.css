@@ -1,5 +1,9 @@
 .formcontrol {
   border: 0px;
+
+  &.selected {
+    font-weight: bold
+  }
 }
 .dropdowntoggle {
   border: 0px;
