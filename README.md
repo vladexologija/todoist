@@ -9,12 +9,12 @@ Simple todo application built to mimic my favorite todo app "Todoist". Used only
 * NodeJS
 * ExpressJS
 * AngularJS
+* React/Redux
 * MongoDB
 * Postgres
 * _TODO_ CouchDB
 * _TODO_ GraphQL
 * _TODO_ Angular2
-* _TODO_ React/Redux
 * _TODO_ VueJS
 * _TODO_ Electron
 
