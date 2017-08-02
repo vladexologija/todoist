@@ -32,9 +32,14 @@ listen();
 
 require('./config/passport')(passport);
 require('./config/express')(app, passport, logger);
+
+// GRAPHQL API
+// require('./config/graphql')(app, passport);
+
+// REST API
 require('./config/routes')(app, passport);
 
-function listen () {
+function listen() {
   if (app.get('env') === 'test') return;
 
   if (cluster.isMaster && config.clusteringEnabled) {
