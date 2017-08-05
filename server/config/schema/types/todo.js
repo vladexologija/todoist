@@ -1,7 +1,7 @@
 const GraphQLObjectType = require('graphql/type').GraphQLObjectType;
 const GraphQLNonNull = require('graphql/type').GraphQLNonNull;
 const GraphQLString = require('graphql/type').GraphQLString;
-const GraphQLInt = require('graphql/type').GraphQLInt;
+const GraphQLID = require('graphql/type').GraphQLID;
 const GraphQLBoolean = require('graphql/type').GraphQLBoolean;
 
 const projectConnection = require('../connections/project');
@@ -11,7 +11,7 @@ const TodoType = new GraphQLObjectType({
   description: 'todo item',
   fields: () => ({
     itemId: {
-      type: GraphQLInt,
+      type: GraphQLID,
       description: 'The id of the todo.'
     },
     content: {
