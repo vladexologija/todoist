@@ -4,7 +4,6 @@ function listTodos() {
   // TODO just use plain promise
   return new Promise((resolve, reject) => {
     Todo.find({}, (err, todos) => {
-      console.log('todos', todos);
       err ? reject(err) : resolve(todos);
     });
   });

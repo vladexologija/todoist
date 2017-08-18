@@ -13,26 +13,23 @@ function projectConnection() {
   const { connectionType } = connectionDefinitions({
     name: 'ItemProjects',
     nodeType: ProjectType,
-    resolveNode: edge => getObject(edge),
-    connectionFields: () => ({
-      project: {
-        type: ProjectType,
-        resolve: conn => conn
-      }
-    })
+    resolveNode: edge => {
+      var foundProject = new Promise((resolve, reject) => {
+        Project.findById(edge.node.project, (err, project) => {
+          err ? reject(err) : resolve(project);
+        });
+      });
+
+      return foundProject;
+    }
   });
 
   return {
     type: connectionType,
     args: connectionArgs,
     resolve: (conn, args) => {
-      var foundProject = new Promise((resolve, reject) => {
-        Project.findById(conn.project, (err, project) => {
-          err ? reject(err) : resolve(project);
-        });
-      });
-
-      return foundProject;
+      const cnn = connectionFromArray([conn], args);
+      return cnn;
     }
   };
 }
