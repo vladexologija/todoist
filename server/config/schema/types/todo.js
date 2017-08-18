@@ -5,15 +5,15 @@ const GraphQLID = require('graphql/type').GraphQLID;
 const GraphQLBoolean = require('graphql/type').GraphQLBoolean;
 
 const projectConnection = require('../connections/project');
+const { globalIdField } = require('graphql-relay');
+const { nodeInterface } = require('../node');
 
 const TodoType = new GraphQLObjectType({
   name: 'todo',
   description: 'todo item',
   fields: () => ({
-    itemId: {
-      type: GraphQLID,
-      description: 'The id of the todo.'
-    },
+    // a globalId is just a base64 encoding of the database id and the type
+    id: globalIdField('todos'),
     content: {
       type: GraphQLString,
       description: 'The content of the todo.'
@@ -23,7 +23,8 @@ const TodoType = new GraphQLObjectType({
       description: 'Checked todo? '
     },
     projectConnection: projectConnection()
-  })
+  }),
+  interfaces: () => [nodeInterface]
 });
 
 module.exports = TodoType;

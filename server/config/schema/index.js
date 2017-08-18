@@ -11,8 +11,7 @@ const {
 } = require('graphql');
 
 const {
-  nodeInterface,
-  nodeField,
+  nodeDefinitions,
   fromGlobalId,
   mutationWithClientMutationId,
   connectionFromPromisedArray,
@@ -22,118 +21,97 @@ const {
 
 const TodoType = require('./types/todo');
 const ProjectType = require('./types/project');
-const Todo = require('../../app/models/item-mongodb');
-const Project = require('../../app/models/project-mongodb');
+const { nodeField } = require('./node');
 
-var { nodeInterface, nodeField } = nodeDefinitions(
-  globalId => {
-    // TODO try out interfaces
-    // TODO figure out how to use type properly
-    var { type, id } = fromGlobalId(globalId);
-    var foundItems = new Promise((resolve, reject) => {
-      Todo.findById(id, (err, todos) => {
-        err ? reject(err) : resolve(todos);
-      });
-    });
+const {
+  listProjects,
+  findProjectById,
+  createProject
+} = require('./api/projects');
 
-    return foundItems;
-  },
-  obj => {
-    return obj.content ? TodoType : Project;
-  }
-);
+const { listTodos, findTodoById } = require('./api/todos');
 
-function todoField() {
-  // relay node definitions ?
+function rootField(type, action) {
+  const argDefs = {};
+  argDefs.id = { type: GraphQLID };
+
   return {
-    type: TodoType,
-    args: {
-      itemId: {
-        name: 'itemId',
-        type: new GraphQLNonNull(GraphQLID)
+    type,
+    args: argDefs,
+    resolve: (_, args) => {
+      console.log('resolve', args);
+      if (args.id !== undefined && args.id !== null) {
+        const globalId = fromGlobalId(args.id);
+        if (
+          globalId.id === null ||
+          globalId.id === undefined ||
+          globalId.id === ''
+        ) {
+          throw new Error('No valid ID extracted from ' + args.id);
+        }
+        return action(globalId.id);
       }
-    },
-    resolve: (conn, { itemId }, source) => {
-      var foundItems = new Promise((resolve, reject) => {
-        Todo.findById(itemId, (err, todos) => {
-          err ? reject(err) : resolve(todos);
-        });
-      });
-
-      return foundItems;
+      throw new Error('must provide id or ' + idName);
     }
   };
 }
 
-function allTodosField() {
-  const { connectionType: TodoConnection } = connectionDefinitions({
-    name: 'Todos',
-    nodeType: TodoType,
+function rootConnection(name, type, action) {
+  const { connectionType } = connectionDefinitions({
+    name,
+    nodeType: type,
     connectionFields: () => ({
       totalCount: {
         type: GraphQLInt,
         resolve: conn => conn.edges.length
       }
-      // [TodoType]: {
-      //   type: new GraphQLList(TodoType),
-      //   resolve: conn => conn.todos
-      // }
     })
   });
-
   return {
-    type: TodoConnection,
+    type: connectionType,
     args: connectionArgs,
     resolve: (conn, args) => {
-      var promise = new Promise((resolve, reject) => {
-        Todo.find({}, (err, todos) => {
-          err ? reject(err) : resolve(todos);
-        });
-      });
-
-      return connectionFromPromisedArray(promise, args);
+      return connectionFromPromisedArray(action(), args);
     }
   };
 }
 
-const projectMutation = mutationWithClientMutationId({
-  name: 'AddProject',
-  inputFields: {
-    name: {
-      type: new GraphQLNonNull(GraphQLString)
-    }
-  },
-  outputFields: {
-    project: {
-      type: ProjectType
-    }
-  },
-  mutateAndGetPayload: args =>
-    new Promise((resolve, reject) => {
-      Project.create({ name: args.name }, (err, project) => {
-        console.log('project', project);
-        err ? reject(err) : resolve({ project });
-      });
-    })
-});
+function rootMutation(type, action) {
+  return mutationWithClientMutationId({
+    name: 'Add',
+    inputFields: {
+      name: {
+        type: new GraphQLNonNull(GraphQLString)
+      }
+    },
+    outputFields: {
+      project: {
+        type
+      }
+    },
+    mutateAndGetPayload: args => action
+  });
+}
 
-const rootType = new GraphQLObjectType({
+const query = new GraphQLObjectType({
   name: 'Root',
   fields: () => ({
-    todo: todoField(),
-    allTodos: allTodosField()
+    allProjects: rootConnection('Projects', ProjectType, listProjects),
+    allTodos: rootConnection('Todos', TodoType, listTodos),
+    todo: rootField(TodoType, findTodoById),
+    project: rootField(ProjectType, findProjectById),
+    node: nodeField
   })
 });
 
-const rootMutation = new GraphQLObjectType({
+const mutation = new GraphQLObjectType({
   name: 'Mutation',
   fields: () => ({
-    addProject: projectMutation
+    addProject: rootMutation(ProjectType, createProject)
   })
 });
 
-// TODO separate into components
 module.exports = new GraphQLSchema({
-  query: rootType,
-  mutation: rootMutation
+  query,
+  mutation
 });
