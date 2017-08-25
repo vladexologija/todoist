@@ -17,4 +17,14 @@ function findTodoById(id) {
   });
 }
 
-module.exports = { listTodos, findTodoById };
+function createTodo(args) {
+  console.log('createTodo', args);
+  return new Promise((resolve, reject) => {
+    Todo.create({ content: args.content }, (err, todo) => {
+      console.log('todo', todo);
+      err ? reject(err) : resolve({ todo });
+    });
+  });
+}
+
+module.exports = { listTodos, findTodoById, createTodo };

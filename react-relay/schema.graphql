@@ -1,0 +1,152 @@
+schema {
+  query: Root
+  mutation: Mutation
+}
+
+input AddProjectInput {
+  name: String!
+  clientMutationId: String
+}
+
+type AddProjectPayload {
+  project: project
+  clientMutationId: String
+}
+
+input AddTodoInput {
+  content: String!
+  clientMutationId: String
+}
+
+type AddTodoPayload {
+  todo: todo
+  clientMutationId: String
+}
+
+# A connection to a list of items.
+type ItemProjectsConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # A list of edges.
+  edges: [ItemProjectsEdge]
+}
+
+# An edge in a connection.
+type ItemProjectsEdge {
+  # The item at the end of the edge
+  node: project
+
+  # A cursor for use in pagination
+  cursor: String!
+}
+
+type Mutation {
+  addProject(input: AddProjectInput!): AddProjectPayload
+  addTodo(input: AddTodoInput!): AddTodoPayload
+}
+
+# An object with an ID
+interface Node {
+  # The id of the object.
+  id: ID!
+}
+
+# Information about pagination in a connection.
+type PageInfo {
+  # When paginating forwards, are there more items?
+  hasNextPage: Boolean!
+
+  # When paginating backwards, are there more items?
+  hasPreviousPage: Boolean!
+
+  # When paginating backwards, the cursor to continue.
+  startCursor: String
+
+  # When paginating forwards, the cursor to continue.
+  endCursor: String
+}
+
+# todo project
+type project implements Node {
+  # The ID of an object
+  id: ID!
+
+  # The name of the project.
+  name: String
+
+  # The color of the project.
+  color: String
+}
+
+# A connection to a list of items.
+type ProjectsConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # A list of edges.
+  edges: [ProjectsEdge]
+  totalCount: Int
+}
+
+# An edge in a connection.
+type ProjectsEdge {
+  # The item at the end of the edge
+  node: project
+
+  # A cursor for use in pagination
+  cursor: String!
+}
+
+type Root {
+  viewer: user
+
+  # Fetches an object given its ID
+  node(
+    # The ID of an object
+    id: ID!
+  ): Node
+}
+
+# todo item
+type todo implements Node {
+  # The ID of an object
+  id: ID!
+
+  # The content of the todo.
+  content: String
+
+  # Checked todo? 
+  checked: Boolean
+  projectConnection(after: String, first: Int, before: String, last: Int): ItemProjectsConnection
+}
+
+# A connection to a list of items.
+type TodosConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # A list of edges.
+  edges: [TodosEdge]
+  totalCount: Int
+}
+
+# An edge in a connection.
+type TodosEdge {
+  # The item at the end of the edge
+  node: todo
+
+  # A cursor for use in pagination
+  cursor: String!
+}
+
+# system user
+type user implements Node {
+  # The ID of an object
+  id: ID!
+  allProjects(after: String, first: Int, before: String, last: Int): ProjectsConnection
+  allTodos(after: String, first: Int, before: String, last: Int): TodosConnection
+  todo(id: ID): todo
+  project(id: ID): project
+}
+

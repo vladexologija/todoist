@@ -95,8 +95,5 @@
     "type": "git",
     "url": "git://github.com/madhums/node-express-mongoose.git"
   },
-  "keywords": [
-    "mvc",
-    "boilerplate"
-  ]
+  "keywords": ["mvc", "boilerplate"]
 }

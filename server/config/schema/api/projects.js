@@ -4,7 +4,6 @@ function listProjects() {
   // TODO just use plain promise
   return new Promise((resolve, reject) => {
     Project.find({}, (err, projects) => {
-      console.log('projects', projects);
       err ? reject(err) : resolve(projects);
     });
   });
@@ -18,7 +17,7 @@ function findProjectById(id) {
   });
 }
 
-function createProject(id) {
+function createProject(args) {
   return new Promise((resolve, reject) => {
     Project.create({ name: args.name }, (err, project) => {
       console.log('project', project);
