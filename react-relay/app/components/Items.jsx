@@ -13,9 +13,9 @@ const Items = props => (
     <div>
       <h3 className={style.title} />
       <ul className={classNames('list-group', style.listgroup)}>
-        {props.viewer.allTodos.edges.map(({ node }) =>
+        {props.viewer.allTodos.edges.filter(({ node }) => !node.checked).map(({ node }) =>
           <li key={node.__id} className={classNames('list-group-item', style.listgroupitem)}>
-            <Item className='note' item={node} />
+            <Item className='note' viewer={props.viewer} item={node} />
           </li>
         )}
       </ul>
@@ -37,6 +37,7 @@ export default createFragmentContainer(
   Items,
   graphql`
     fragment Items_viewer on user {
+      id
       allTodos(last: 100) @connection(key: "Items_allTodos", filters: []) {
         edges {
           node {

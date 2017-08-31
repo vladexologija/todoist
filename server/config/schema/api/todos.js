@@ -18,13 +18,48 @@ function findTodoById(id) {
 }
 
 function createTodo(args) {
-  console.log('createTodo', args);
   return new Promise((resolve, reject) => {
     Todo.create({ content: args.content }, (err, todo) => {
-      console.log('todo', todo);
       err ? reject(err) : resolve({ todo });
     });
   });
 }
 
-module.exports = { listTodos, findTodoById, createTodo };
+function updateTodo(args) {
+  return new Promise((resolve, reject) => {
+    Todo.findById(args.id, function(err, project) {
+      if (!project) {
+        return reject(err);
+      } else if (err) {
+        return reject(err);
+      }
+
+      project.content = args.content;
+      project.checked = args.checked;
+
+      project.save(function(err, project) {
+        if (err) {
+          return reject(err);
+        } else {
+          return resolve(project);
+        }
+      });
+    });
+  });
+}
+
+function removeTodo(args) {
+  return new Promise((resolve, reject) => {
+    Todo.findByIdAndRemove(args.id, (err, result) => {
+      err ? reject(err) : resolve({ id: args.id });
+    });
+  });
+}
+
+module.exports = {
+  listTodos,
+  findTodoById,
+  createTodo,
+  updateTodo,
+  removeTodo
+};

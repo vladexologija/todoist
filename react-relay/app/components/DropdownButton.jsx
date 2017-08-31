@@ -29,7 +29,7 @@ export default class DropdownButton extends React.Component {
         >
           <span className='fa fa-ellipsis-v' />
         </button>
-        <div className='dropdown-menu dropdown-menu-right'>
+        <div className={classNames('dropdown-menu dropdown-menu-right', { show: this.state.show })}>
           {this.props.children}
         </div>
       </div>

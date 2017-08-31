@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 2acc2324648e169eef9dbd8d9e29e9cc
+ * @relayHash 11ecdd9662d7f80a77abc4e44ec4cc71
  */
 
 /* eslint-disable */
@@ -10,7 +10,9 @@
 /*::
 import type {ConcreteBatch} from 'relay-runtime';
 export type AppQueryResponse = {|
-  +viewer: ?{| |};
+  +viewer: ?{|
+    +id: string;
+  |};
 |};
 */
 
@@ -18,13 +20,14 @@ export type AppQueryResponse = {|
 /*
 query AppQuery {
   viewer {
+    id
     ...Projects_viewer
     ...Items_viewer
-    id
   }
 }
 
 fragment Projects_viewer on user {
+  id
   allProjects(last: 100) {
     edges {
       node {
@@ -42,6 +45,7 @@ fragment Projects_viewer on user {
 }
 
 fragment Items_viewer on user {
+  id
   allTodos(last: 100) {
     edges {
       node {
@@ -86,6 +90,13 @@ const batch /*: ConcreteBatch*/ = {
         "plural": false,
         "selections": [
           {
+            "kind": "ScalarField",
+            "alias": null,
+            "args": null,
+            "name": "id",
+            "storageKey": null
+          },
+          {
             "kind": "FragmentSpread",
             "name": "Projects_viewer",
             "args": null
@@ -119,6 +130,13 @@ const batch /*: ConcreteBatch*/ = {
         "name": "viewer",
         "plural": false,
         "selections": [
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "args": null,
+            "name": "id",
+            "storageKey": null
+          },
           {
             "kind": "LinkedField",
             "alias": null,
@@ -343,20 +361,13 @@ const batch /*: ConcreteBatch*/ = {
             "name": "allTodos",
             "key": "Items_allTodos",
             "filters": []
-          },
-          {
-            "kind": "ScalarField",
-            "alias": null,
-            "args": null,
-            "name": "id",
-            "storageKey": null
           }
         ],
         "storageKey": null
       }
     ]
   },
-  "text": "query AppQuery {\n  viewer {\n    ...Projects_viewer\n    ...Items_viewer\n    id\n  }\n}\n\nfragment Projects_viewer on user {\n  allProjects(last: 100) {\n    edges {\n      node {\n        ...Project_project\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment Items_viewer on user {\n  allTodos(last: 100) {\n    edges {\n      node {\n        ...Item_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment Item_item on todo {\n  id\n  content\n  checked\n}\n\nfragment Project_project on project {\n  id\n  name\n}\n"
+  "text": "query AppQuery {\n  viewer {\n    id\n    ...Projects_viewer\n    ...Items_viewer\n  }\n}\n\nfragment Projects_viewer on user {\n  id\n  allProjects(last: 100) {\n    edges {\n      node {\n        ...Project_project\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment Items_viewer on user {\n  id\n  allTodos(last: 100) {\n    edges {\n      node {\n        ...Item_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment Item_item on todo {\n  id\n  content\n  checked\n}\n\nfragment Project_project on project {\n  id\n  name\n}\n"
 };
 
 module.exports = batch;

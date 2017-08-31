@@ -3,16 +3,9 @@ import { ConnectionHandler } from 'relay-runtime'
 import environment from '../relay/environment'
 
 const mutation = graphql`
-  mutation createProjectMutation($input: AddProjectInput!) {
-    addProject(input: $input) {
-      project {
-        __typename
-        cursor
-        node {
-          id
-          name
-        }
-      }
+  mutation removeProjectMutation($input: RemoveProjectInput!) {
+    removeProject(input: $input) {
+      projectId
       viewer {
         id
       }
@@ -20,13 +13,9 @@ const mutation = graphql`
   }
 `
 
-export default (name, viewer, callback) => {
+export default (project, viewer, callback) => {
   const variables = {
-    input: {
-      name,
-      // TODO don't think this is necessary
-      clientMutationId: ''
-    }
+    input: { id: project.id }
   }
 
   commitMutation(environment, {
@@ -36,12 +25,12 @@ export default (name, viewer, callback) => {
       callback()
     },
     updater: proxyStore => {
-      const addProjectField = proxyStore.getRootField('addProject')
-      const newProject = addProjectField.getLinkedRecord('project')
+      const payload = proxyStore.getRootField('removeProject')
+      const projectId = payload.getValue('projectId')
 
       const viewerProxy = proxyStore.get(viewer.id)
       const conn = ConnectionHandler.getConnection(viewerProxy, 'Projects_allProjects')
-      ConnectionHandler.insertEdgeAfter(conn, newProject)
+      ConnectionHandler.deleteNode(conn, projectId)
     },
     onError: err => console.error(err)
   })

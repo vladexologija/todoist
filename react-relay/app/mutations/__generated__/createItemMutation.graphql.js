@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 0aedfdb1ce9ffd6f79efbb6a41088dfd
+ * @relayHash 95737e3a992141a51e6ae36e488c962a
  */
 
 /* eslint-disable */
@@ -19,7 +19,15 @@ export type createItemMutationVariables = {|
 export type createItemMutationResponse = {|
   +addTodo: ?{|
     +todo: ?{|
-      +content: ?string;
+      +__typename: string;
+      +cursor: string;
+      +node: ?{|
+        +id: string;
+        +content: ?string;
+      |};
+    |};
+    +viewer: ?{|
+      +id: string;
     |};
   |};
 |};
@@ -32,7 +40,14 @@ mutation createItemMutation(
 ) {
   addTodo(input: $input) {
     todo {
-      content
+      __typename
+      cursor
+      node {
+        id
+        content
+      }
+    }
+    viewer {
       id
     }
   }
@@ -72,7 +87,7 @@ const batch /*: ConcreteBatch*/ = {
             "kind": "LinkedField",
             "alias": null,
             "args": null,
-            "concreteType": "todo",
+            "concreteType": "TodosEdge",
             "name": "todo",
             "plural": false,
             "selections": [
@@ -80,7 +95,57 @@ const batch /*: ConcreteBatch*/ = {
                 "kind": "ScalarField",
                 "alias": null,
                 "args": null,
-                "name": "content",
+                "name": "__typename",
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "args": null,
+                "name": "cursor",
+                "storageKey": null
+              },
+              {
+                "kind": "LinkedField",
+                "alias": null,
+                "args": null,
+                "concreteType": "todo",
+                "name": "node",
+                "plural": false,
+                "selections": [
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "args": null,
+                    "name": "id",
+                    "storageKey": null
+                  },
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "args": null,
+                    "name": "content",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "kind": "LinkedField",
+            "alias": null,
+            "args": null,
+            "concreteType": "user",
+            "name": "viewer",
+            "plural": false,
+            "selections": [
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "args": null,
+                "name": "id",
                 "storageKey": null
               }
             ],
@@ -128,7 +193,7 @@ const batch /*: ConcreteBatch*/ = {
             "kind": "LinkedField",
             "alias": null,
             "args": null,
-            "concreteType": "todo",
+            "concreteType": "TodosEdge",
             "name": "todo",
             "plural": false,
             "selections": [
@@ -136,9 +201,52 @@ const batch /*: ConcreteBatch*/ = {
                 "kind": "ScalarField",
                 "alias": null,
                 "args": null,
-                "name": "content",
+                "name": "__typename",
                 "storageKey": null
               },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "args": null,
+                "name": "cursor",
+                "storageKey": null
+              },
+              {
+                "kind": "LinkedField",
+                "alias": null,
+                "args": null,
+                "concreteType": "todo",
+                "name": "node",
+                "plural": false,
+                "selections": [
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "args": null,
+                    "name": "id",
+                    "storageKey": null
+                  },
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "args": null,
+                    "name": "content",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "kind": "LinkedField",
+            "alias": null,
+            "args": null,
+            "concreteType": "user",
+            "name": "viewer",
+            "plural": false,
+            "selections": [
               {
                 "kind": "ScalarField",
                 "alias": null,
@@ -154,7 +262,7 @@ const batch /*: ConcreteBatch*/ = {
       }
     ]
   },
-  "text": "mutation createItemMutation(\n  $input: AddTodoInput!\n) {\n  addTodo(input: $input) {\n    todo {\n      content\n      id\n    }\n  }\n}\n"
+  "text": "mutation createItemMutation(\n  $input: AddTodoInput!\n) {\n  addTodo(input: $input) {\n    todo {\n      __typename\n      cursor\n      node {\n        id\n        content\n      }\n    }\n    viewer {\n      id\n    }\n  }\n}\n"
 };
 
 module.exports = batch;

@@ -9,6 +9,7 @@
 /*::
 import type {ConcreteFragment} from 'relay-runtime';
 export type Projects_viewer = {|
+  +id: string;
   +allProjects: ?{|
     +edges: ?$ReadOnlyArray<?{|
       +node: ?{| |};
@@ -35,6 +36,13 @@ const fragment /*: ConcreteFragment*/ = {
   },
   "name": "Projects_viewer",
   "selections": [
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "args": null,
+      "name": "id",
+      "storageKey": null
+    },
     {
       "kind": "LinkedField",
       "alias": "allProjects",

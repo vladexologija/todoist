@@ -1,21 +1,58 @@
 // @flow
 
 import React, { PropTypes } from 'react'
-
 import { createFragmentContainer, graphql } from 'react-relay'
+import EditItem from '../components/EditItem'
+import updateTodo from '../mutations/updateTodo'
+import removeTodo from '../mutations/removeTodo'
 
 class Item extends React.Component {
   static propTypes = {
+    viewer: PropTypes.object.isRequired,
     item: PropTypes.object.isRequired
+  }
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      editing: false
+    }
+  }
+
+  checkItem = e => {
+    e.stopPropagation()
+    updateTodo(this.props.item, this.props.item.content, !this.props.item.completed, this.props.viewer)
+  }
+
+  activateItemEdit = () => {
+    this.setState({
+      editing: !this.state.editing
+    })
+  }
+
+  editItem = data => {
+    updateTodo(this.props.item, data.task, this.props.item.checked, this.props.viewer, this.activateItemEdit)
+  }
+
+  deleteItem = e => {
+    e.stopPropagation()
+    removeTodo(this.props.item, this.props.viewer, () => console.log('removeProject success'))
   }
 
   render() {
     const { item } = this.props
-    console.log('this.props', this.props)
     return (
-      <span>
-        {item.content}
-      </span>
+      <EditItem
+        editing={this.state.editing}
+        completed={item.completed}
+        task={item.content}
+        date={item.date}
+        onCheck={this.checkItem}
+        onClick={this.activateItemEdit}
+        onEdit={() => this.activateItemEdit(item.id)}
+        onUpdate={data => this.editItem(data)}
+        onDelete={this.deleteItem}
+      />
     )
   }
 }

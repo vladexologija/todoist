@@ -15,6 +15,7 @@ import '../styles/app.css'
 const AppQuery = graphql`
   query AppQuery {
     viewer {
+      id
       ...Projects_viewer
       ...Items_viewer
     }
@@ -22,12 +23,12 @@ const AppQuery = graphql`
 `
 
 class App extends Component {
-  addProject = () => {
-    createProject('new project', () => console.log('mutation success'))
+  addProject = viewer => {
+    createProject('new project1', viewer, () => console.log('mutation success'))
   }
 
-  addItem = () => {
-    createItem('new item', () => console.log('mutation success'))
+  addItem = viewer => {
+    createItem('new item', viewer, () => console.log('mutation success'))
   }
 
   render() {
@@ -49,10 +50,10 @@ class App extends Component {
                 <div className='holder container'>
                   <div className='row'>
                     <div className='col-md-4 sidebar'>
-                      <Projects onAddProject={this.addProject} viewer={props.viewer} />
+                      <Projects onAddProject={() => this.addProject(props.viewer)} viewer={props.viewer} />
                     </div>
                     <div className='col-md-8 content'>
-                      <Items onAddItem={this.addItem} viewer={props.viewer} />
+                      <Items onAddItem={() => this.addItem(props.viewer)} viewer={props.viewer} />
                     </div>
                   </div>
                 </div>

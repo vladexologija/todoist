@@ -50,7 +50,7 @@ const Projects = props => {
           <ul className='nav flex-column nav-sidebar'>
             {props.viewer.allProjects.edges.map(({ node }) =>
               <li key={node.__id} className='nav-item'>
-                <Project project={node} />
+                <Project project={node} viewer={props.viewer} />
               </li>
             )}
           </ul>
@@ -72,6 +72,7 @@ export default createFragmentContainer(
   Projects,
   graphql`
     fragment Projects_viewer on user {
+      id
       allProjects(last: 100) @connection(key: "Projects_allProjects", filters: []) {
         edges {
           node {

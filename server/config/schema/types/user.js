@@ -11,6 +11,7 @@ const {
 } = require('graphql');
 
 const projectConnection = require('../connections/project');
+
 const {
   globalIdField,
   nodeDefinitions,
@@ -58,7 +59,7 @@ function rootField(type, action) {
 }
 
 function rootConnection(name, type, action) {
-  const { connectionType } = connectionDefinitions({
+  const { connectionType, edgeType } = connectionDefinitions({
     name,
     nodeType: type,
     connectionFields: () => ({
@@ -68,27 +69,41 @@ function rootConnection(name, type, action) {
       }
     })
   });
-  return {
+
+  const connection = {
     type: connectionType,
     args: connectionArgs,
     resolve: (conn, args) => {
       return connectionFromPromisedArray(action(), args);
     }
   };
+
+  return {
+    connection,
+    edgeType
+  };
 }
 
-const UserType = new GraphQLObjectType({
+// TODO refactor again :(
+const projectsRoot = rootConnection('Projects', GraphQLProject, listProjects);
+const todosRoot = rootConnection('Todos', GraphQLTodo, listTodos);
+
+const GraphQLUser = new GraphQLObjectType({
   name: 'user',
   description: 'system user',
   fields: () => ({
     // a globalId is just a base64 encoding of the database id and the type
     id: globalIdField('user'),
-    allProjects: rootConnection('Projects', GraphQLProject, listProjects),
-    allTodos: rootConnection('Todos', GraphQLTodo, listTodos),
+    allProjects: projectsRoot.connection,
+    allTodos: todosRoot.connection,
     todo: rootField(GraphQLTodo, findTodoById),
     project: rootField(GraphQLProject, findProjectById)
   }),
   interfaces: () => [nodeInterface]
 });
 
-module.exports = UserType;
+module.exports = {
+  GraphQLUser,
+  GraphQLProjectEdge: projectsRoot.edgeType,
+  GraphQLTodoEdge: todosRoot.edgeType
+};

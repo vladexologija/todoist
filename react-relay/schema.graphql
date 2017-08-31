@@ -9,7 +9,8 @@ input AddProjectInput {
 }
 
 type AddProjectPayload {
-  project: project
+  project: ProjectsEdge
+  viewer: user
   clientMutationId: String
 }
 
@@ -19,7 +20,8 @@ input AddTodoInput {
 }
 
 type AddTodoPayload {
-  todo: todo
+  todo: TodosEdge
+  viewer: user
   clientMutationId: String
 }
 
@@ -44,6 +46,10 @@ type ItemProjectsEdge {
 type Mutation {
   addProject(input: AddProjectInput!): AddProjectPayload
   addTodo(input: AddTodoInput!): AddTodoPayload
+  renameProject(input: RenameProjectInput!): RenameProjectPayload
+  updateTodo(input: UpdateTodoInput!): UpdateTodoPayload
+  removeProject(input: RemoveProjectInput!): RemoveProjectPayload
+  removeTodo(input: RemoveTodoInput!): RemoveTodoPayload
 }
 
 # An object with an ID
@@ -98,6 +104,40 @@ type ProjectsEdge {
   cursor: String!
 }
 
+input RemoveProjectInput {
+  id: ID!
+  clientMutationId: String
+}
+
+type RemoveProjectPayload {
+  projectId: ID
+  viewer: user
+  clientMutationId: String
+}
+
+input RemoveTodoInput {
+  id: ID!
+  clientMutationId: String
+}
+
+type RemoveTodoPayload {
+  todoId: ID
+  viewer: user
+  clientMutationId: String
+}
+
+input RenameProjectInput {
+  id: ID!
+  name: String!
+  clientMutationId: String
+}
+
+type RenameProjectPayload {
+  project: project
+  viewer: user
+  clientMutationId: String
+}
+
 type Root {
   viewer: user
 
@@ -138,6 +178,19 @@ type TodosEdge {
 
   # A cursor for use in pagination
   cursor: String!
+}
+
+input UpdateTodoInput {
+  id: ID!
+  checked: Boolean!
+  content: String!
+  clientMutationId: String
+}
+
+type UpdateTodoPayload {
+  todo: todo
+  viewer: user
+  clientMutationId: String
 }
 
 # system user

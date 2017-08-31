@@ -1,39 +1,16 @@
-const {
-  GraphQLID,
-  GraphQLInt,
-  GraphQLString,
-  GraphQLBoolean,
-  GraphQLList,
-  GraphQLObjectType,
-  GraphQLSchema,
-  GraphQLNonNull,
-  GraphQLInputObjectType
-} = require('graphql');
-
-const {
-  nodeDefinitions,
-  fromGlobalId,
-  mutationWithClientMutationId,
-  connectionFromPromisedArray,
-  connectionArgs,
-  connectionDefinitions
-} = require('graphql-relay');
-
-const { GraphQLUser, GraphQLProject, GraphQLTodo } = require('./types');
+const { GraphQLObjectType, GraphQLSchema } = require('graphql');
+const { GraphQLUser } = require('./types/user');
 const { nodeField } = require('./node');
-const { createProject } = require('./api/projects');
-const { createTodo } = require('./api/todos');
+const { getViewer } = require('./api/user');
+
+const mutations = require('./mutations');
 
 const query = new GraphQLObjectType({
   name: 'Root',
   fields: {
     viewer: {
       type: GraphQLUser,
-      resolve: () => ({
-        id: '1',
-        username: 'test',
-        name: 'testing'
-      })
+      resolve: () => getViewer()
     },
     node: nodeField
   }
@@ -41,41 +18,7 @@ const query = new GraphQLObjectType({
 
 const mutation = new GraphQLObjectType({
   name: 'Mutation',
-  fields: () => ({
-    addProject: mutationWithClientMutationId({
-      name: 'AddProject',
-      inputFields: {
-        name: {
-          type: new GraphQLNonNull(GraphQLString)
-        }
-      },
-      outputFields: {
-        project: {
-          type: GraphQLProject
-        }
-      },
-      mutateAndGetPayload: args => {
-        return createProject(args);
-      }
-    }),
-    addTodo: mutationWithClientMutationId({
-      name: 'AddTodo',
-      inputFields: {
-        content: {
-          type: new GraphQLNonNull(GraphQLString)
-        }
-      },
-      outputFields: {
-        todo: {
-          type: GraphQLTodo
-        }
-      },
-      mutateAndGetPayload: args => {
-        console.log('mutateAndGetPayload', args);
-        return createTodo(args);
-      }
-    })
-  })
+  fields: () => mutations
 });
 
 module.exports = new GraphQLSchema({

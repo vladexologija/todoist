@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 073a255f9c839148697fc24bba688847
+ * @relayHash b67e2afa1846aba06752415add7d011d
  */
 
 /* eslint-disable */
@@ -19,7 +19,15 @@ export type createProjectMutationVariables = {|
 export type createProjectMutationResponse = {|
   +addProject: ?{|
     +project: ?{|
-      +name: ?string;
+      +__typename: string;
+      +cursor: string;
+      +node: ?{|
+        +id: string;
+        +name: ?string;
+      |};
+    |};
+    +viewer: ?{|
+      +id: string;
     |};
   |};
 |};
@@ -32,7 +40,14 @@ mutation createProjectMutation(
 ) {
   addProject(input: $input) {
     project {
-      name
+      __typename
+      cursor
+      node {
+        id
+        name
+      }
+    }
+    viewer {
       id
     }
   }
@@ -72,7 +87,7 @@ const batch /*: ConcreteBatch*/ = {
             "kind": "LinkedField",
             "alias": null,
             "args": null,
-            "concreteType": "project",
+            "concreteType": "ProjectsEdge",
             "name": "project",
             "plural": false,
             "selections": [
@@ -80,7 +95,57 @@ const batch /*: ConcreteBatch*/ = {
                 "kind": "ScalarField",
                 "alias": null,
                 "args": null,
-                "name": "name",
+                "name": "__typename",
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "args": null,
+                "name": "cursor",
+                "storageKey": null
+              },
+              {
+                "kind": "LinkedField",
+                "alias": null,
+                "args": null,
+                "concreteType": "project",
+                "name": "node",
+                "plural": false,
+                "selections": [
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "args": null,
+                    "name": "id",
+                    "storageKey": null
+                  },
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "args": null,
+                    "name": "name",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "kind": "LinkedField",
+            "alias": null,
+            "args": null,
+            "concreteType": "user",
+            "name": "viewer",
+            "plural": false,
+            "selections": [
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "args": null,
+                "name": "id",
                 "storageKey": null
               }
             ],
@@ -128,7 +193,7 @@ const batch /*: ConcreteBatch*/ = {
             "kind": "LinkedField",
             "alias": null,
             "args": null,
-            "concreteType": "project",
+            "concreteType": "ProjectsEdge",
             "name": "project",
             "plural": false,
             "selections": [
@@ -136,9 +201,52 @@ const batch /*: ConcreteBatch*/ = {
                 "kind": "ScalarField",
                 "alias": null,
                 "args": null,
-                "name": "name",
+                "name": "__typename",
                 "storageKey": null
               },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "args": null,
+                "name": "cursor",
+                "storageKey": null
+              },
+              {
+                "kind": "LinkedField",
+                "alias": null,
+                "args": null,
+                "concreteType": "project",
+                "name": "node",
+                "plural": false,
+                "selections": [
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "args": null,
+                    "name": "id",
+                    "storageKey": null
+                  },
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "args": null,
+                    "name": "name",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "kind": "LinkedField",
+            "alias": null,
+            "args": null,
+            "concreteType": "user",
+            "name": "viewer",
+            "plural": false,
+            "selections": [
               {
                 "kind": "ScalarField",
                 "alias": null,
@@ -154,7 +262,7 @@ const batch /*: ConcreteBatch*/ = {
       }
     ]
   },
-  "text": "mutation createProjectMutation(\n  $input: AddProjectInput!\n) {\n  addProject(input: $input) {\n    project {\n      name\n      id\n    }\n  }\n}\n"
+  "text": "mutation createProjectMutation(\n  $input: AddProjectInput!\n) {\n  addProject(input: $input) {\n    project {\n      __typename\n      cursor\n      node {\n        id\n        name\n      }\n    }\n    viewer {\n      id\n    }\n  }\n}\n"
 };
 
 module.exports = batch;
