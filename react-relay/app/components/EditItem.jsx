@@ -11,7 +11,7 @@ export default class EditItem extends Component {
     task: PropTypes.string.isRequired,
     date: PropTypes.instanceOf(Date),
     editing: PropTypes.bool,
-    completed: PropTypes.bool,
+    checked: PropTypes.bool,
     onCheck: PropTypes.func.isRequired,
     onEdit: PropTypes.func.isRequired,
     onUpdate: PropTypes.func.isRequired,
@@ -22,7 +22,7 @@ export default class EditItem extends Component {
   static defaultProps = {
     date: new Date(),
     editing: false,
-    completed: false
+    checked: false
   }
 
   constructor(props) {
@@ -55,7 +55,7 @@ export default class EditItem extends Component {
   renderValue = () =>
     <div className='input-group'>
       <span className={classNames('input-group-addon', style.inputgroupaddon)}>
-        <input type='checkbox' name='checkbox' className={style.todocheckbox} checked={this.props.completed} />
+        <input type='checkbox' name='checkbox' className={style.todocheckbox} checked={this.props.checked} />
         <label htmlFor='checkbox'>
           <span tabIndex={0} role='button' onClick={this.props.onCheck} />
         </label>

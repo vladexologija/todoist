@@ -34,10 +34,6 @@ export default (todo, content, checked, viewer, callback) => {
       const element = proxyStore.get(todo.id)
       element.setValue(chkd, 'checked')
       element.setValue(cnt, 'content')
-
-      // const viewerProxy = proxyStore.get(viewer.id)
-      // const conn = ConnectionHandler.getConnection(viewerProxy, 'Items_allTodos')
-      // ConnectionHandler.update(conn, element)
     },
     onError: err => console.error(err)
   })

@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 11ecdd9662d7f80a77abc4e44ec4cc71
+ * @relayHash 6bf52d9f4d13ee3954c1b05db58b9974
  */
 
 /* eslint-disable */
@@ -360,7 +360,9 @@ const batch /*: ConcreteBatch*/ = {
             "handle": "connection",
             "name": "allTodos",
             "key": "Items_allTodos",
-            "filters": []
+            "filters": [
+              "checked"
+            ]
           }
         ],
         "storageKey": null

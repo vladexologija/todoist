@@ -21,7 +21,7 @@ class Item extends React.Component {
 
   checkItem = e => {
     e.stopPropagation()
-    updateTodo(this.props.item, this.props.item.content, !this.props.item.completed, this.props.viewer)
+    updateTodo(this.props.item, this.props.item.content, !this.props.item.checked, this.props.viewer)
   }
 
   activateItemEdit = () => {
@@ -41,10 +41,11 @@ class Item extends React.Component {
 
   render() {
     const { item } = this.props
+
     return (
       <EditItem
         editing={this.state.editing}
-        completed={item.completed}
+        checked={item.checked}
         task={item.content}
         date={item.date}
         onCheck={this.checkItem}

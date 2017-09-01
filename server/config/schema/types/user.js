@@ -74,6 +74,7 @@ function rootConnection(name, type, action) {
     type: connectionType,
     args: connectionArgs,
     resolve: (conn, args) => {
+      console.log('args', args);
       return connectionFromPromisedArray(action(), args);
     }
   };
