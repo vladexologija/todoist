@@ -9,23 +9,24 @@ import Filter from '../components/Filter'
 import style from '../styles/item.css'
 
 // TODO pass props as just ...props from parent to it's children
-const Items = props =>
-  <div>
-    <h3 className={style.title} />
-    <ul className={classNames('list-group', style.listgroup)}>
-      {props.viewer.allTodos.edges.map(({ node }) =>
-        <li key={node.__id} className={classNames('list-group-item', style.listgroupitem)}>
-          <Item className='note' viewer={props.viewer} item={node} />
-        </li>
-      )}
-    </ul>
+const Items = props => (
     <div>
-      <button className='btn btn-link' onClick={props.onAddItem}>
-        <i className='fa fa-plus fa-lg' /> Add Task
-      </button>
+      <h3 className={style.title} />
+      <ul className={classNames('list-group', style.listgroup)}>
+        {props.viewer.allTodos.edges.map(({ node }) =>
+          <li key={node.__id} className={classNames('list-group-item', style.listgroupitem)}>
+            <Item className='note' viewer={props.viewer} item={node} />
+          </li>
+        )}
+      </ul>
+      <div>
+        <button className='btn btn-link' onClick={props.onAddItem}>
+          <i className='fa fa-plus fa-lg' /> Add Task
+        </button>
+      </div>
+      <Filter />
     </div>
-    <Filter />
-  </div>
+  )
 
 Items.propTypes = {
   viewer: PropTypes.object.isRequired,
@@ -34,10 +35,10 @@ Items.propTypes = {
 
 export default createFragmentContainer(
   Items,
-  graphql`
-    fragment Items_viewer on user {
+  graphql.experimental`
+    fragment Items_viewer on user @argumentDefinitions(filter: { type: "String", defaultValue: "all" }) {
       id
-      allTodos(last: 100) @connection(key: "Items_allTodos", filters: []) {
+      allTodos(last: 100, filter: $filter) @connection(key: "Items_allTodos", filters: []) {
         edges {
           node {
             ...Item_item

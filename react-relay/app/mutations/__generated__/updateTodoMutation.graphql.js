@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 14a269d0d594061aaec4a277e2b9e83c
+ * @relayHash d85ad93e39717a1f34b069a252fea0fd
  */
 
 /* eslint-disable */
@@ -24,6 +24,7 @@ export type updateTodoMutationResponse = {|
       +id: string;
       +content: ?string;
       +checked: ?boolean;
+      +editing: ?boolean;
     |};
   |};
 |};
@@ -39,6 +40,7 @@ mutation updateTodoMutation(
       id
       content
       checked
+      editing
     }
   }
 }
@@ -100,6 +102,13 @@ const batch /*: ConcreteBatch*/ = {
                 "alias": null,
                 "args": null,
                 "name": "checked",
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "args": null,
+                "name": "editing",
                 "storageKey": null
               }
             ],
@@ -171,6 +180,13 @@ const batch /*: ConcreteBatch*/ = {
                 "args": null,
                 "name": "checked",
                 "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "args": null,
+                "name": "editing",
+                "storageKey": null
               }
             ],
             "storageKey": null
@@ -180,7 +196,7 @@ const batch /*: ConcreteBatch*/ = {
       }
     ]
   },
-  "text": "mutation updateTodoMutation(\n  $input: UpdateTodoInput!\n) {\n  updateTodo(input: $input) {\n    todo {\n      id\n      content\n      checked\n    }\n  }\n}\n"
+  "text": "mutation updateTodoMutation(\n  $input: UpdateTodoInput!\n) {\n  updateTodo(input: $input) {\n    todo {\n      id\n      content\n      checked\n      editing\n    }\n  }\n}\n"
 };
 
 module.exports = batch;

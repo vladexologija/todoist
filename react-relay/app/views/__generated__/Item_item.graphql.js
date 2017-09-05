@@ -12,6 +12,7 @@ export type Item_item = {|
   +id: string;
   +content: ?string;
   +checked: ?boolean;
+  +editing: ?boolean;
 |};
 */
 
@@ -41,6 +42,13 @@ const fragment /*: ConcreteFragment*/ = {
       "alias": null,
       "args": null,
       "name": "checked",
+      "storageKey": null
+    },
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "args": null,
+      "name": "editing",
       "storageKey": null
     }
   ],

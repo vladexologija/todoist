@@ -158,6 +158,9 @@ type todo implements Node {
 
   # Checked todo? 
   checked: Boolean
+
+  # Checked todo? 
+  editing: Boolean
   projectConnection(after: String, first: Int, before: String, last: Int): ItemProjectsConnection
 }
 
@@ -197,8 +200,8 @@ type UpdateTodoPayload {
 type user implements Node {
   # The ID of an object
   id: ID!
-  allProjects(after: String, first: Int, before: String, last: Int): ProjectsConnection
-  allTodos(after: String, first: Int, before: String, last: Int): TodosConnection
+  allProjects(filter: String, after: String, first: Int, before: String, last: Int): ProjectsConnection
+  allTodos(filter: String, after: String, first: Int, before: String, last: Int): TodosConnection
   todo(id: ID): todo
   project(id: ID): project
 }

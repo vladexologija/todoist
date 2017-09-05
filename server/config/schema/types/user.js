@@ -70,12 +70,20 @@ function rootConnection(name, type, action) {
     })
   });
 
+  const args = Object.assign(
+    {
+      filter: {
+        type: GraphQLString
+      }
+    },
+    connectionArgs
+  );
+
   const connection = {
     type: connectionType,
-    args: connectionArgs,
+    args: args,
     resolve: (conn, args) => {
-      console.log('args', args);
-      return connectionFromPromisedArray(action(), args);
+      return connectionFromPromisedArray(action(args), args);
     }
   };
 

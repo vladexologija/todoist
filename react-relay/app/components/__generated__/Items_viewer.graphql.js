@@ -20,7 +20,14 @@ export type Items_viewer = {|
 
 
 const fragment /*: ConcreteFragment*/ = {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "kind": "LocalArgument",
+      "name": "filter",
+      "type": "String",
+      "defaultValue": "all"
+    }
+  ],
   "kind": "Fragment",
   "metadata": {
     "connection": [

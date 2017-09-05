@@ -1,9 +1,18 @@
+const _ = require('underscore');
 const Todo = require('../../../app/models/item-mongodb');
 
-function listTodos() {
+function listTodos(args) {
+  let filter = {};
+  if (
+    !_.isUndefined(args) &&
+    !_.isUndefined(args.filter) &&
+    args.filter !== 'all'
+  ) {
+    filter = args.filter === 'active' ? { checked: false } : { checked: true };
+  }
   // TODO just use plain promise
   return new Promise((resolve, reject) => {
-    Todo.find({}, (err, todos) => {
+    Todo.find(filter, (err, todos) => {
       err ? reject(err) : resolve(todos);
     });
   });

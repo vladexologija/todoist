@@ -22,6 +22,11 @@ const TodoType = new GraphQLObjectType({
       type: GraphQLBoolean,
       description: 'Checked todo? '
     },
+    // FIXME
+    editing: {
+      type: GraphQLBoolean,
+      description: 'Checked todo? '
+    },
     projectConnection: projectConnection()
   }),
   interfaces: () => [nodeInterface]

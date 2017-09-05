@@ -15,7 +15,15 @@ class Item extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      editing: false
+      editing: props.item.editing
+    }
+  }
+
+  componentWillReceiveProps(props) {
+    if (props.item.editing && props.item.editing !== this.state.editing) {
+      this.state = {
+        editing: props.item.editing
+      }
     }
   }
 
@@ -65,6 +73,7 @@ export default createFragmentContainer(
       id
       content
       checked
+      editing
     }
   `
 )

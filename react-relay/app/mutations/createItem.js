@@ -11,6 +11,8 @@ const mutation = graphql`
         node {
           id
           content
+          checked
+          editing
         }
       }
       viewer {
@@ -38,6 +40,9 @@ export default (content, viewer, callback) => {
     updater: proxyStore => {
       const addTodoField = proxyStore.getRootField('addTodo')
       const newTodo = addTodoField.getLinkedRecord('todo')
+      // FIXME
+      const node = newTodo.getLinkedRecord('node')
+      node.setValue(true, 'editing')
 
       const viewerProxy = proxyStore.get(viewer.id)
       const conn = ConnectionHandler.getConnection(viewerProxy, 'Items_allTodos')

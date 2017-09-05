@@ -9,6 +9,7 @@ const mutation = graphql`
         id
         content
         checked
+        editing
       }
     }
   }
@@ -34,6 +35,8 @@ export default (todo, content, checked, viewer, callback) => {
       const element = proxyStore.get(todo.id)
       element.setValue(chkd, 'checked')
       element.setValue(cnt, 'content')
+      // FIXME
+      element.setValue(false, 'editing')
     },
     onError: err => console.error(err)
   })

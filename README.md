@@ -20,6 +20,7 @@ Simple todo application built to mimic my favorite todo app "Todoist". Used only
 * _TODO_ Neo4J
 * _TODO_ VueJS
 * _TODO_ Electron
+* _TODO_ WebSockets/Subscriptions
 
 ### Requirements
 

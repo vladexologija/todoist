@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 95737e3a992141a51e6ae36e488c962a
+ * @relayHash 7ccfc1abba1deea004f61588da036db5
  */
 
 /* eslint-disable */
@@ -24,6 +24,8 @@ export type createItemMutationResponse = {|
       +node: ?{|
         +id: string;
         +content: ?string;
+        +checked: ?boolean;
+        +editing: ?boolean;
       |};
     |};
     +viewer: ?{|
@@ -45,6 +47,8 @@ mutation createItemMutation(
       node {
         id
         content
+        checked
+        editing
       }
     }
     viewer {
@@ -125,6 +129,20 @@ const batch /*: ConcreteBatch*/ = {
                     "alias": null,
                     "args": null,
                     "name": "content",
+                    "storageKey": null
+                  },
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "args": null,
+                    "name": "checked",
+                    "storageKey": null
+                  },
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "args": null,
+                    "name": "editing",
                     "storageKey": null
                   }
                 ],
@@ -232,6 +250,20 @@ const batch /*: ConcreteBatch*/ = {
                     "args": null,
                     "name": "content",
                     "storageKey": null
+                  },
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "args": null,
+                    "name": "checked",
+                    "storageKey": null
+                  },
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "args": null,
+                    "name": "editing",
+                    "storageKey": null
                   }
                 ],
                 "storageKey": null
@@ -262,7 +294,7 @@ const batch /*: ConcreteBatch*/ = {
       }
     ]
   },
-  "text": "mutation createItemMutation(\n  $input: AddTodoInput!\n) {\n  addTodo(input: $input) {\n    todo {\n      __typename\n      cursor\n      node {\n        id\n        content\n      }\n    }\n    viewer {\n      id\n    }\n  }\n}\n"
+  "text": "mutation createItemMutation(\n  $input: AddTodoInput!\n) {\n  addTodo(input: $input) {\n    todo {\n      __typename\n      cursor\n      node {\n        id\n        content\n        checked\n        editing\n      }\n    }\n    viewer {\n      id\n    }\n  }\n}\n"
 };
 
 module.exports = batch;

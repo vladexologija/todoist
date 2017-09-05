@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 6bf52d9f4d13ee3954c1b05db58b9974
+ * @relayHash 3b430319de7deea730ba78f87d9ed812
  */
 
 /* eslint-disable */
@@ -18,11 +18,13 @@ export type AppQueryResponse = {|
 
 
 /*
-query AppQuery {
+query AppQuery(
+  $filter: String
+) {
   viewer {
     id
     ...Projects_viewer
-    ...Items_viewer
+    ...Items_viewer_Vt7Yj
   }
 }
 
@@ -44,9 +46,9 @@ fragment Projects_viewer on user {
   }
 }
 
-fragment Items_viewer on user {
+fragment Items_viewer_Vt7Yj on user {
   id
-  allTodos(last: 100) {
+  allTodos(last: 100, filter: $filter) {
     edges {
       node {
         ...Item_item
@@ -66,6 +68,7 @@ fragment Item_item on todo {
   id
   content
   checked
+  editing
 }
 
 fragment Project_project on project {
@@ -76,7 +79,14 @@ fragment Project_project on project {
 
 const batch /*: ConcreteBatch*/ = {
   "fragment": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": [
+      {
+        "kind": "LocalArgument",
+        "name": "filter",
+        "type": "String",
+        "defaultValue": null
+      }
+    ],
     "kind": "Fragment",
     "metadata": null,
     "name": "AppQuery",
@@ -104,7 +114,14 @@ const batch /*: ConcreteBatch*/ = {
           {
             "kind": "FragmentSpread",
             "name": "Items_viewer",
-            "args": null
+            "args": [
+              {
+                "kind": "Variable",
+                "name": "filter",
+                "variableName": "filter",
+                "type": null
+              }
+            ]
           }
         ],
         "storageKey": null
@@ -117,7 +134,14 @@ const batch /*: ConcreteBatch*/ = {
   "metadata": {},
   "name": "AppQuery",
   "query": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": [
+      {
+        "kind": "LocalArgument",
+        "name": "filter",
+        "type": "String",
+        "defaultValue": null
+      }
+    ],
     "kind": "Root",
     "name": "AppQuery",
     "operation": "query",
@@ -251,6 +275,12 @@ const batch /*: ConcreteBatch*/ = {
             "alias": null,
             "args": [
               {
+                "kind": "Variable",
+                "name": "filter",
+                "variableName": "filter",
+                "type": "String"
+              },
+              {
                 "kind": "Literal",
                 "name": "last",
                 "value": 100,
@@ -302,6 +332,13 @@ const batch /*: ConcreteBatch*/ = {
                         "kind": "ScalarField",
                         "alias": null,
                         "args": null,
+                        "name": "editing",
+                        "storageKey": null
+                      },
+                      {
+                        "kind": "ScalarField",
+                        "alias": null,
+                        "args": null,
                         "name": "__typename",
                         "storageKey": null
                       }
@@ -344,12 +381,18 @@ const batch /*: ConcreteBatch*/ = {
                 "storageKey": null
               }
             ],
-            "storageKey": "allTodos{\"last\":100}"
+            "storageKey": null
           },
           {
             "kind": "LinkedHandle",
             "alias": null,
             "args": [
+              {
+                "kind": "Variable",
+                "name": "filter",
+                "variableName": "filter",
+                "type": "String"
+              },
               {
                 "kind": "Literal",
                 "name": "last",
@@ -360,16 +403,14 @@ const batch /*: ConcreteBatch*/ = {
             "handle": "connection",
             "name": "allTodos",
             "key": "Items_allTodos",
-            "filters": [
-              "checked"
-            ]
+            "filters": []
           }
         ],
         "storageKey": null
       }
     ]
   },
-  "text": "query AppQuery {\n  viewer {\n    id\n    ...Projects_viewer\n    ...Items_viewer\n  }\n}\n\nfragment Projects_viewer on user {\n  id\n  allProjects(last: 100) {\n    edges {\n      node {\n        ...Project_project\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment Items_viewer on user {\n  id\n  allTodos(last: 100) {\n    edges {\n      node {\n        ...Item_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment Item_item on todo {\n  id\n  content\n  checked\n}\n\nfragment Project_project on project {\n  id\n  name\n}\n"
+  "text": "query AppQuery(\n  $filter: String\n) {\n  viewer {\n    id\n    ...Projects_viewer\n    ...Items_viewer_Vt7Yj\n  }\n}\n\nfragment Projects_viewer on user {\n  id\n  allProjects(last: 100) {\n    edges {\n      node {\n        ...Project_project\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment Items_viewer_Vt7Yj on user {\n  id\n  allTodos(last: 100, filter: $filter) {\n    edges {\n      node {\n        ...Item_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment Item_item on todo {\n  id\n  content\n  checked\n  editing\n}\n\nfragment Project_project on project {\n  id\n  name\n}\n"
 };
 
 module.exports = batch;
