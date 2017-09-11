@@ -7,6 +7,7 @@ import Navbar from '../components/Navbar'
 import Projects from '../components/Projects'
 import Items from '../components/Items'
 import FetchError from '../components/FetchError'
+import Filter from '../components/Filter'
 import { attachItem, createProject, fetchProjects } from '../actions/projects'
 import { createItem, fetchItems } from '../actions/items'
 import { getSelectedProject, getDueItems, getVisibleItems, getIsFetching, getErrorMessage } from '../reducers'
@@ -62,6 +63,17 @@ class App extends React.Component {
     this.props.onAttachItem(this.props.project.id, item.id)
   }
 
+  renderActions() {
+    return (
+      <div>
+        <button className='btn btn-link' onClick={this.addItem}>
+          <i className='fa fa-plus fa-lg' /> Add Task
+        </button>
+        <Filter />
+      </div>
+    )
+  }
+
   render() {
     const { projects, project, items, isFetching, errorMessage } = this.props
     if (isFetching && !projects.length) {
@@ -81,7 +93,8 @@ class App extends React.Component {
               <Projects onAddProject={this.addProject} projects={projects} />
             </div>
             <div className='col-md-8 content'>
-              {items.length ? <Items onAddItem={this.addItem} project={project} items={items} /> : null}
+              {items.length ? <Items project={project} items={items} /> : null}
+              {project ? this.renderActions() : null}
             </div>
           </div>
         </div>

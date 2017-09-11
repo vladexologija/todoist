@@ -4,6 +4,9 @@ const merge = require('webpack-merge')
 // const NpmInstallPlugin = require('npm-install-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const CompressionPlugin = require('compression-webpack-plugin')
+const ProgressBarPlugin = require('progress-bar-webpack-plugin')
+const InlineManifestPlugin = require('inline-manifest-webpack-plugin')
 
 const TARGET = process.env.npm_lifecycle_event
 process.env.BABEL_ENV = TARGET
@@ -11,10 +14,11 @@ process.env.BABEL_ENV = TARGET
 const common = {
   context: resolve('app'),
   entry: {
-    app: './index.jsx'
+    app: './index.jsx',
+    vendor: ['react', 'bootstrap/dist/css/bootstrap.css', 'font-awesome/css/font-awesome.css']
   },
   output: {
-    filename: 'bundle.[name].js',
+    filename: 'bundle.[name].[chunkhash].js',
     path: resolve('build')
   },
   resolve: {
@@ -28,24 +32,6 @@ const common = {
       //   loader: 'eslint-loader',
       //   exclude: /node_modules/
       // },
-      {
-        // Test expects a RegExp! Note the slashes!
-        test: /\.css$/,
-        exclude: /node_modules/,
-        loaders: [
-          'style-loader',
-          { loader: 'css-loader', options: { modules: true, sourceMaps: true, importLoaders: 1 } },
-          // 'css-loader?importLoaders=1&modules=true&localIdentName=[name]__[local]___[hash:base64:5]',
-          'postcss-loader'
-        ]
-      },
-      {
-        // load entire css for packages
-        test: /\.css$/,
-        exclude: '/app/',
-        include: /node_modules/,
-        loaders: ['style-loader', 'css-loader']
-      },
       {
         test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
         loader: 'url-loader',
@@ -70,6 +56,30 @@ const common = {
 if (TARGET === 'start' || !TARGET) {
   module.exports = merge(common, {
     devtool: 'source-map',
+    module: [
+      {
+        rules: [
+          {
+            // load css code via modules
+            test: /\.css$/,
+            exclude: /node_modules/,
+            loaders: [
+              'style-loader',
+              { loader: 'css-loader', options: { modules: true, sourceMaps: true, importLoaders: 1 } },
+              // 'css-loader?importLoaders=1&modules=true&localIdentName=[name]__[local]___[hash:base64:5]',
+              'postcss-loader'
+            ]
+          },
+          {
+            // load bootstrap
+            test: /\.css$/,
+            exclude: '/app/',
+            include: /node_modules/,
+            loaders: ['style-loader', 'css-loader']
+          }
+        ]
+      }
+    ],
     devServer: {
       contentBase: resolve('build'),
 
@@ -113,17 +123,66 @@ if (TARGET === 'start' || !TARGET) {
 }
 
 if (TARGET === 'build') {
+  const extractBootstrap = new ExtractTextPlugin({
+    filename: '[name][chunkhash]bootstrap.css'
+  })
+  const extractCSS = new ExtractTextPlugin({
+    filename: '[name][chunkhash].css'
+  })
   module.exports = merge(common, {
+    module: {
+      rules: [
+        {
+          // load css code via modules
+          test: /\.css$/,
+          exclude: /node_modules/,
+          use: extractCSS.extract({
+            fallback: 'style-loader',
+            use: [
+              { loader: 'css-loader', options: { modules: true, sourceMaps: true, importLoaders: 1 } },
+              // 'css-loader?importLoaders=1&modules=true&localIdentName=[name]__[local]___[hash:base64:5]',
+              'postcss-loader'
+            ]
+          })
+        },
+        {
+          // load bootstrap
+          test: /\.css$/,
+          exclude: '/app/',
+          include: /node_modules/,
+          use: extractBootstrap.extract({
+            fallback: 'style-loader',
+            use: 'css-loader'
+          })
+        }
+      ]
+    },
     plugins: [
+      new HtmlWebpackPlugin({
+        template: './index.html'
+      }),
       new webpack.optimize.UglifyJsPlugin({
         compress: {
-          sourceMap: true,
+          // sourceMap: true,
           warnings: true
         }
       }),
-      new ExtractTextPlugin({
-        filename: '[name].css'
-      })
+      // add replace .js with .gz.js to nginx
+      new CompressionPlugin({
+        asset: '[path].gz[query]',
+        algorithm: 'gzip',
+        test: /\.js$|\.css$|\.html$/,
+        threshold: 10240,
+        minRatio: 0.8
+      }),
+      // longterm caching of vendor chunks
+      new InlineManifestPlugin(),
+      new webpack.optimize.CommonsChunkPlugin({
+        name: ['vendor', 'manifest']
+      }),
+      new ProgressBarPlugin(),
+      extractBootstrap,
+      extractCSS
     ]
   })
 }
