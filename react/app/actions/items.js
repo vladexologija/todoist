@@ -3,7 +3,7 @@ import * as api from '../api'
 import { getIsFetching } from '../reducers'
 import createId from '../utils/createId'
 
-export const FETCH_ITEMS_START = 'FETCH_ITEMS_START'
+export const FETCH_ITEMS = 'FETCH_ITEMS'
 export const FETCH_ITEMS_SUCCESS = 'FETCH_ITEMS_SUCCESS'
 export const FETCH_ITEMS_FAILURE = 'FETCH_ITEMS_FAILURE'
 
@@ -21,26 +21,26 @@ export const fetchItems = filter => (dispatch, getState) => {
   }
 
   dispatch({
-    type: FETCH_ITEMS_START,
+    type: FETCH_ITEMS,
     filter
   })
 
-  return api.fetchItems(filter).then(
-    response => {
-      dispatch({
-        type: FETCH_ITEMS_SUCCESS,
-        filter,
-        response
-      })
-    },
-    error => {
-      dispatch({
-        type: FETCH_ITEMS_FAILURE,
-        filter,
-        message: error.message || 'Something went wrong.'
-      })
-    }
-  )
+  // return api.fetchItems(filter).then(
+  //   response => {
+  //     dispatch({
+  //       type: FETCH_ITEMS_SUCCESS,
+  //       filter,
+  //       response
+  //     })
+  //   },
+  //   error => {
+  //     dispatch({
+  //       type: FETCH_ITEMS_FAILURE,
+  //       filter,
+  //       message: error.message || 'Something went wrong.'
+  //     })
+  //   }
+  // )
 }
 
 export const CREATE_ITEM = 'CREATE_ITEM'

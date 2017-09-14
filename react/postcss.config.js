@@ -10,5 +10,6 @@ module.exports = {
     cssnano: {}
     // require('uncss').postcssPlugin
     // stylelint: {}
+    // postcss-autoreset
   }
 }

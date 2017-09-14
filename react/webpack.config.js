@@ -14,11 +14,12 @@ process.env.BABEL_ENV = TARGET
 const common = {
   context: resolve('app'),
   entry: {
-    app: './index.jsx',
-    vendor: ['react', 'bootstrap/dist/css/bootstrap.css', 'font-awesome/css/font-awesome.css']
+    app: './index.jsx'
+    // if prod vendor: ['react', 'bootstrap/dist/css/bootstrap.css', 'font-awesome/css/font-awesome.css']
   },
   output: {
-    filename: 'bundle.[name].[chunkhash].js',
+    filename: 'bundle.[name].js',
+    // if prod filename: 'bundle.[name].[chunkhash].js',
     path: resolve('build')
   },
   resolve: {
@@ -56,30 +57,28 @@ const common = {
 if (TARGET === 'start' || !TARGET) {
   module.exports = merge(common, {
     devtool: 'source-map',
-    module: [
-      {
-        rules: [
-          {
-            // load css code via modules
-            test: /\.css$/,
-            exclude: /node_modules/,
-            loaders: [
-              'style-loader',
-              { loader: 'css-loader', options: { modules: true, sourceMaps: true, importLoaders: 1 } },
-              // 'css-loader?importLoaders=1&modules=true&localIdentName=[name]__[local]___[hash:base64:5]',
-              'postcss-loader'
-            ]
-          },
-          {
-            // load bootstrap
-            test: /\.css$/,
-            exclude: '/app/',
-            include: /node_modules/,
-            loaders: ['style-loader', 'css-loader']
-          }
-        ]
-      }
-    ],
+    module: {
+      rules: [
+        {
+          // load css code via modules
+          test: /\.css$/,
+          exclude: /node_modules/,
+          loaders: [
+            'style-loader',
+            { loader: 'css-loader', options: { modules: true, sourceMaps: true, importLoaders: 1 } },
+            // 'css-loader?importLoaders=1&modules=true&localIdentName=[name]__[local]___[hash:base64:5]',
+            'postcss-loader'
+          ]
+        },
+        {
+          // load bootstrap
+          test: /\.css$/,
+          exclude: '/app/',
+          include: /node_modules/,
+          loaders: ['style-loader', 'css-loader']
+        }
+      ]
+    },
     devServer: {
       contentBase: resolve('build'),
 

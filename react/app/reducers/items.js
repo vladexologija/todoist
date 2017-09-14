@@ -8,7 +8,7 @@ const initialState = {
 // TODO add child item reducer
 export default function items(state = initialState, action) {
   switch (action.type) {
-    case types.FETCH_ITEMS_START: {
+    case types.FETCH_ITEMS: {
       const nextState = { ...state }
 
       nextState.isFetching = true

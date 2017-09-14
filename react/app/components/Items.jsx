@@ -4,6 +4,7 @@ import React from 'react'
 import classNames from 'classnames'
 import Item from '../views/Item'
 import style from '../styles/item.css'
+import higherOrderComponent from './higherOrderComponent'
 
 // TODO pass props as just ...props from parent to it's children
 const Items = props =>
@@ -18,6 +19,9 @@ const Items = props =>
         </li>
       )}
     </ul>
+    <div>
+      {props.clicks}
+    </div>
   </div>
 
 Items.propTypes = {
@@ -25,4 +29,4 @@ Items.propTypes = {
   items: React.PropTypes.array.isRequired
 }
 
-export default Items
+export default higherOrderComponent(Items, clicks => (clicks > 10 ? 10 : clicks))

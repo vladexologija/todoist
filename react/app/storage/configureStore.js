@@ -1,10 +1,13 @@
 import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
+import createSagaMiddleware from 'redux-saga'
 import createLogger from 'redux-logger'
 import reducers from '../reducers'
+import sagas from '../sagas'
 
 const configureStore = () => {
-  const middlewares = [thunk]
+  const sagaMiddleware = createSagaMiddleware()
+  const middlewares = [thunk, sagaMiddleware]
 
   if (process.env.NODE_ENV !== 'production') {
     middlewares.push(createLogger())
@@ -17,6 +20,8 @@ const configureStore = () => {
     applyMiddleware(...middlewares)
   )
   /* eslint-enable */
+
+  sagaMiddleware.run(sagas)
 
   if (module.hot) {
     module.hot.accept('../reducers', () => {
