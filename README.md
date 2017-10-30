@@ -15,7 +15,7 @@ Simple todo application built to mimic my favorite todo app "Todoist". Used only
 * MongoDB
 * Postgres
 * GraphQL
-* _TODO_ Rails 4
+* _TODO_ Rails5
 * _TODO_ Firebase
 * _TODO_ Angular2
 * _TODO_ RxJs
