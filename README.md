@@ -3,8 +3,6 @@
 ## About
 Simple todo application built to mimic my favorite todo app "Todoist". Used only for experimental/education purposes.
 
-<img src="http://i64.tinypic.com/ilinn9.png" />
-
 ## Technologies
 * NodeJS
 * ExpressJS
@@ -15,9 +13,10 @@ Simple todo application built to mimic my favorite todo app "Todoist". Used only
 * MongoDB
 * Postgres
 * GraphQL
+* Angular6
+* _TODO_ React/Apollo
 * _TODO_ Rails5
 * _TODO_ Firebase
-* _TODO_ Angular2
 * _TODO_ RxJs
 * _TODO_ CouchDB
 * _TODO_ Neo4J

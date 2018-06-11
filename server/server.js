@@ -34,10 +34,10 @@ require('./config/passport')(passport);
 require('./config/express')(app, passport, logger);
 
 // GRAPHQL API
-require('./config/graphql')(app, passport);
+// require('./config/graphql')(app, passport);
 
 // REST API
-// require('./config/routes')(app, passport);
+require('./config/routes')(app, passport);
 
 function listen() {
   if (app.get('env') === 'test') return;
