@@ -1,0 +1,10 @@
+<div class="row">
+  <div class="col-md-4">
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item" *ngFor="let project of projects">{{project.name}}</li>
+    </ul>
+  </div>
+  <div class="col-md-8">
+    <app-items [items]="items" (onAddItem)="addItem($event)" (saveItem)="saveItem($event)" (toggleEditMode)="toggleEditMode($event)"></app-items>
+  </div>
+</div>

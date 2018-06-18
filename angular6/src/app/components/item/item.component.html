@@ -1,0 +1,17 @@
+<form *ngIf="item.isEditMode">
+  <div class="input-group mb-2">
+    <input type="text" class="form-control" name="content" [(ngModel)]="item.content"  placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+    <div class="input-group-append">
+      <span class="input-group-text" id="basic-addon2">Schedule</span>
+    </div>
+  </div>
+  <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+    <div class="btn-group mr-2" role="group" aria-label="First group">
+      <button type="button" (click)="this.saveItem.emit(item)" class="btn btn-danger">Save</button>
+    </div>
+    <div class="btn-group" role="group" aria-label="Third group">
+      <button type="button" (click)="toggleEditMode.emit(item.id)" class="btn btn-light">Cancel</button>
+    </div>
+  </div>
+</form>
+<li *ngIf="!item.isEditMode" class="list-group-item">{{item.content}}</li>

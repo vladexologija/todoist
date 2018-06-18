@@ -1,0 +1,8 @@
+<div>
+  <ul class="list-group list-group-flush">   
+    <app-item (toggleEditMode)="toggleEditMode.emit($event)" (saveItem)="saveItem.emit($event)" [item]="item" *ngFor="let item of items"></app-item>
+  </ul>
+  <div class="mt-4">
+    <a href="#" (click)="addItem()">+ Add Task</a>
+  </div>
+</div>
